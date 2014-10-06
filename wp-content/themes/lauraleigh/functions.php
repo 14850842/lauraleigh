@@ -34,11 +34,29 @@ function cmb_sample_metaboxes( array $meta_boxes ) {
     // Start with an underscore to hide fields from custom fields list
     $prefix = '_ppm_';
 
+    $meta_boxes['feature_metabox'] = array(
+        'id'         => 'feature_metabox',
+        'title'      => __( 'Feature Metabox', 'cmb' ),
+        'pages'      => array( 'feature', ), // Post type
+        'context'    => 'normal',
+        'priority'   => 'high',
+        'show_names' => true, // Show field names on the left
+        // 'cmb_styles' => true, // Enqueue the CMB stylesheet on the frontend
+        'fields'     => array(
+            array(
+                'name'       => __( 'Title Meta', 'cmb' ),
+                'desc'       => __( 'title description (optional)', 'cmb' ),
+                'id'         => $prefix . 'title_meta',
+                'type'       => 'text',
+            ),
+        ),
+    );
+
     $meta_boxes['image_metabox'] = array(
             'id'         => 'image_metabox',
             'title'      => __( 'Image Options', 'cmb' ),
             'description' => __(''),
-            'pages'      => array( 'post','page'), // Post type
+            'pages'      => array( 'post'), // Post type
             'context'    => 'normal',
             'priority'   => 'high',
             'show_names' => true, // Show field names on the left
@@ -64,6 +82,44 @@ function cmb_sample_metaboxes( array $meta_boxes ) {
                     ),
                 ),
             )
+        );
+
+        $meta_boxes['faq_metabox'] = array(
+            'id' => 'faq-information',
+            'title' => 'FAQ Information',
+            'pages' => array('page'), // post type
+            'show_on' => array( 'key' => 'page-template', 'value' => 'templates/template-faq.php' ),
+            'context' => 'normal', //  'normal', 'advanced', or 'side'
+            'priority' => 'high',  //  'high', 'core', 'default' or 'low'
+            'show_names' => true, // Show field names on the left
+            'fields' => array(
+                array(
+                    'id'          => $prefix . 'faq_group',
+                    'type'        => 'group',
+                    'description' => __( 'Add FAQ', 'cmb' ),
+                    'options'     => array(
+                        'group_title'   => __( 'FAQ {#}', 'cmb' ), // since version 1.1.4, {#} gets replaced by row number
+                        'add_button'    => __( 'Add Entry', 'cmb' ),
+                        'remove_button' => __( 'Remove Entry', 'cmb' ),
+                        'sortable'      => true, // beta
+                    ),
+                    // Fields array works the same, except id's only need to be unique for this group. Prefix is not needed.
+                    'fields'      => array(
+                        array(
+                            'name' => 'Entry Title',
+                            'id'   => 'title',
+                            'type' => 'text',
+                            // 'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
+                        ),
+                        array(
+                            'name' => 'Description',
+                            'description' => 'Write a short description for this entry',
+                            'id'   => 'description',
+                            'type' => 'textarea_small',
+                        ),
+                    ),
+                ),
+            ),
         );
 
     
@@ -201,7 +257,9 @@ function woo_story_sharing($title='Share:')
         <li>
             <div class="nav-buttons">
                 <a href="#" onclick="window.open('http://www.facebook.com/sharer.php?s=100&p[title]=<?php echo urlencode($title); ?>&p[summary]=<?php echo urlencode($summary); ?>&p[url]=<?php echo urlencode($url); ?>&p[images][0]=<?php echo urlencode($thumb[0]); ?>', 'sharer', 'toolbar=0,status=0,width=626,height=436');return false;">
-                    <span class="icon-wrap"><i class="fa fa-facebook fa-2x"></i></span>
+                    <span class="icon-wrap"><svg class="svg-icon shape-facebook">
+                                                <use xlink:href="#shape-facebook"></use>
+                                            </svg></span>
                     <h3>Facebook</h3>
                 </a>
             </div>
@@ -209,7 +267,9 @@ function woo_story_sharing($title='Share:')
         <li>  
             <div class="nav-buttons">
                 <a target="_blank" class="social" href="https://twitter.com/share/?counturl=<?php the_permalink();?>&amp;url=<?php the_permalink();?>&amp;text=<?php the_title();?>">
-                    <span class="icon-wrap"><i class="fa fa-twitter fa-2x"></i></span>
+                    <span class="icon-wrap"><svg class="svg-icon shape-twitter">
+                                                <use xlink:href="#shape-twitter"></use>
+                                            </svg></span>
                     <h3>Twitter</h3>
                 </a>
             </div>  
@@ -217,7 +277,9 @@ function woo_story_sharing($title='Share:')
         <li>
             <div class="nav-buttons">
                 <a class="social" target="_blank" onclick="window.open('//pinterest.com/pin/create/button/?url=<?php the_permalink();?>&amp;media=<?php echo $thumb[0];?>', 'sharer', 'toolbar=0,status=0,width=626,height=436');return false;" href="#">
-                    <span class="icon-wrap"><i class="fa fa-pinterest fa-2x"></i></span>
+                    <span class="icon-wrap"><svg class="svg-icon shape-pinterest">
+                                                <use xlink:href="#shape-pinterest"></use>
+                                            </svg></span>
                     <h3>Pinterest</h3>
                 </a>
             </div> 

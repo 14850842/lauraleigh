@@ -43,6 +43,7 @@
 	</head>
 
 	<body <?php body_class(); ?>>
+	<?php include_once(get_stylesheet_directory()."/library/svg/svg-defs.svg"); ?>
 
     <header class="header">
 
@@ -57,7 +58,11 @@
                 <span class="icon-bar"></span>
               </button>
 
-              <a class="navbar-brand" href="<?php bloginfo( 'url' ) ?>/" title="<?php bloginfo( 'name' ) ?>" rel="homepage"><?php bloginfo('name'); ?></a>
+              <a class="navbar-brand" href="<?php bloginfo( 'url' ) ?>/" title="<?php bloginfo( 'name' ) ?>" rel="homepage">
+              	<svg class="svg-logo shape-logo">
+				  	<use xlink:href="#shape-logo"></use>
+				</svg>
+              </a>
 
             </div>
 

@@ -3,6 +3,21 @@
 }
 
 
+body > svg {
+  display: none!important;
+}
+.svg-logo {
+  height: 19px;
+  fill: @gray;
+}
+
+.svg-icon {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+
+
 .divider::before, .divider::after {
 position: absolute;
 content: '';
@@ -11,6 +26,37 @@ pointer-events: none;
 
 .divider {
 	position: relative;
+}
+
+.overlay-link {
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  opacity: 0;
+  z-index: 10;
+  .transition(.8s);
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  color: #fff;
+  opacity: 0;
+  .transition(.8s);
+  -webkit-transform: translate3d(0,-50%,0);
+  transform: translate3d(0,-50%,0);
+  text-align: center;
+  z-index: 11;
+  span {
+    border-bottom: 1px solid #fff;
+  }
 }
 
 .ss-style-roundedsplit::before,
@@ -263,8 +309,8 @@ pointer-events: none;
 	right: 15px;
 }
 
-.nav-roundslide svg.icon {
-	fill: #566473;
+.nav-roundslide a.next .shape-largearrow {
+	.rotate(180deg);
 }
 
 .nav-buttons a h3 {
@@ -338,6 +384,19 @@ pointer-events: none;
 	transition-delay: 0.1s;
 	-webkit-transform: translateX(0);
 	transform: translateX(0);
+}
+
+/* Suppliers Section */
+
+.suppliersGrid .supplier {
+  &:hover {
+    .overlay-text {
+      opacity: 1;
+    }
+    .overlay-link {
+      opacity: 1;
+    }
+  }
 }
 
 /*

@@ -43,7 +43,11 @@
 					      	<?php if ($prev) : ?>
 					      		<nav class="nav-roundslide nav-buttons">
 									<a class="prev" href="<?php echo get_permalink($prev); ?>">
-										<span class="icon-wrap"><i class="fa fa-angle-left"></i></span>
+										<span class="icon-wrap">
+											<svg class="svg-icon shape-largearrow">
+											  	<use xlink:href="#shape-largearrow"></use>
+											</svg>
+										</span>
 										<h3><?php echo get_the_title($prev); ?></h3>
 									</a>
 								</nav>
@@ -58,7 +62,11 @@
 					      	<?php if ($next) : ?>
 						      	<nav class="nav-roundslide nav-buttons">
 									<a class="next" href="<?php echo get_permalink($next); ?>">
-										<span class="icon-wrap"><i class="fa fa-angle-right"></i></span>
+										<span class="icon-wrap">
+											<svg class="svg-icon shape-largearrow">
+											  	<use xlink:href="#shape-largearrow"></use>
+											</svg>
+										</span>
 										<h3><?php echo get_the_title($next); ?></h3>
 									</a>
 								</nav>
