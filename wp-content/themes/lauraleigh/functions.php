@@ -288,5 +288,3 @@ function woo_story_sharing($title='Share:')
     <div class="clearfix"></div>
     <?php
 }
-
-
