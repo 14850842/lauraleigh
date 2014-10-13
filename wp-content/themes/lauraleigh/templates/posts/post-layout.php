@@ -27,5 +27,5 @@
 		<figcaption class="viewContainer">
 		<p><?php _e('View The Full Shoot','ppm'); ?></p>
 		</figcaption>		
-		<a href="<?php the_permalink();?>" title="<?php the_title();?>">View more</a>
+		<a class="overlayLink" href="<?php the_permalink();?>" title="<?php the_title();?>">View more</a>
 </figure>

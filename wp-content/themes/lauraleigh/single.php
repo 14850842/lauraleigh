@@ -42,7 +42,7 @@
 					      <div class="previous col-md-2">
 					      	<?php if ($prev) : ?>
 					      		<nav class="nav-roundslide nav-buttons">
-									<a class="prev" href="<?php echo get_permalink($prev); ?>">
+									<a class="prev link" href="<?php echo get_permalink($prev); ?>">
 										<span class="icon-wrap">
 											<svg class="svg-icon shape-largearrow">
 											  	<use xlink:href="#shape-largearrow"></use>
@@ -61,7 +61,7 @@
 					      	<?php $next = get_next_post(); ?>
 					      	<?php if ($next) : ?>
 						      	<nav class="nav-roundslide nav-buttons">
-									<a class="next" href="<?php echo get_permalink($next); ?>">
+									<a class="next link" href="<?php echo get_permalink($next); ?>">
 										<span class="icon-wrap">
 											<svg class="svg-icon shape-largearrow">
 											  	<use xlink:href="#shape-largearrow"></use>

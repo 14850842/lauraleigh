@@ -3,7 +3,24 @@ jQuery(document).ready(function() {
 });
 
 jQuery(window).load(function() {
-	jQuery('.flexslider').flexslider({
-		animation: "slide"
-	});
+	jQuery("#owl-testimonials").owlCarousel({
+ 
+            navigation : true, // Show next and prev buttons
+            slideSpeed : 300,
+            paginationSpeed : 400,
+            singleItem:true,
+            pagination:false,
+            autoHeight : true,
+            navigationText: ['<div class="nav-buttons"><span class="link"><span class="icon-wrap"><svg class="svg-icon shape-largearrow"><use xlink:href="#shape-largearrow"></use></svg></span><h3>Previous</h3></span>','<div class="nav-buttons"><span class="link"><span class="icon-wrap"><svg class="svg-icon shape-largearrow"><use xlink:href="#shape-largearrow"></use></svg></span><h3>Next</h3></span>'],
+            transitionStyle : "fade"
+       
+            // "singleItem:true" is a shortcut for:
+            // items : 1, 
+            // itemsDesktop : false,
+            // itemsDesktopSmall : false,
+            // itemsTablet: false,
+            // itemsMobile : false
+       
+        });
+
 });

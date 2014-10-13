@@ -26,7 +26,7 @@
 								</div>
 								<div class="titleContainer">
 									<h3><?php the_title(); ?></h3>
-      								<span class="meta"><?php echo get_post_meta($post->ID,'_ppm_title_meta',true);?></span>
+      								<small><span class="meta"><?php echo get_post_meta($post->ID,'_ppm_title_meta',true);?></span></small>
       							</div>
     						</div>
 		    					

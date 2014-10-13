@@ -43,24 +43,21 @@
 
 			$faqs = get_post_meta($post->ID,'_ppm_faq_group',true); 
 
-			$tab_content .= '<div class="tab-pane" id="'.$post->post_name.'"><div class="panel-group" id="accordion'.$post->ID.'">';
+			$tab_content .= '<div class="tab-pane" id="'.$post->post_name.'"><div class="faq-group" id="accordion'.$post->ID.'">';
 
 			if (!empty($faqs)) {
 				foreach ($faqs as $key => $faq) {
-					$tab_content .=	'<div class="panel panel-default">
-				    					<div class="panel-heading">
-				     						<h4 class="panel-title">
-				        						<a data-toggle="collapse" data-parent="#accordion'.$post->ID.'" href="#collapse'.$post->ID.'-'.$key.'">
-				        							'.$faq['title'].'
-				        						</a>
-				        					</h4>
-				        				</div>
-				        				<div id="collapse'.$post->ID.'-'.$key.'" class="panel-collapse collapse">
-				      						<div class="panel-body">
-				      							'.$faq['description'].'
-				      						</div>
-				      					</div>
-				      				</div>';
+					$tab_content .=	'<h3 class="faq-title">
+		        						<a data-toggle="collapse" data-parent="#accordion'.$post->ID.'" href="#collapse'.$post->ID.'-'.$key.'">
+		        							'.$faq['title'].'
+		        						</a>
+		        					</h3>
+
+			        				<div id="collapse'.$post->ID.'-'.$key.'" class="panel-collapse collapse">
+			      						<div class="panel-body">
+			      							'.$faq['description'].'
+			      						</div>
+			      					</div>';
 				}	
 			}
 

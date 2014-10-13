@@ -18,7 +18,8 @@ module.exports = function(grunt) {
         files: ['"wp-content/themes/lauraleigh/library/less/*.less',"wp-content/themes/lauraleigh/library/less/**/*.less"], // which files to watch
         tasks: ['less'],
         options: {
-          nospawn: true
+          nospawn: true,
+          livereload:true
         }
       }
     },

@@ -12,7 +12,7 @@
 			// The Loop
 			if ( $query->have_posts() ) { ?>
 				
-				<?php while ( $query->have_posts() ) { $query->the_post(); ?>
+				<?php while ( $query->have_posts() ) { $query->the_post();?>
 					<div class="pageContainer">
 						<?php get_template_part('templates/clients/page','layout'); ?>
 					</div>

@@ -101,6 +101,9 @@ class wp_bootstrap_navwalker extends Walker_Nav_Menu {
 
 			$item_output = $args->before;
 
+			$args->link_before = '<span class="nav-link">';
+			$args->after_before = '</span>';
+
 			/*
 			 * Glyphicons
 			 * ===========

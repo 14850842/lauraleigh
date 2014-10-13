@@ -11,24 +11,22 @@
 
 			// The Loop
 			if ( $query->have_posts() ) { ?>
-				<div class="flexslider">
-					<ul class="slides">
-			
-						<?php while ( $query->have_posts() ) { $query->the_post(); ?>
-							
-							<li>
-      							<div id="quote-<?php echo $post->ID;?>" class="quoteContainer" itemprop="review" itemscope itemtype="http://schema.org/Review">
-      								<blockquote class="testimonials-text" itemprop="reviewBody">
-      									<?php the_content(); ?>
-      								</blockquote>
-      								<cite class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-      									<span itemprop="name">- <?php echo get_post_meta($post->ID,'_byline',true); ?></span>
-      								</cite>
-      							</div>
-    						</li>
-		    					
-						<?php } ?>
-					</ul>
+				
+				<div id="owl-testimonials" class="owl-carousel owl-theme">
+					<?php while ( $query->have_posts() ) { $query->the_post(); ?>
+						
+						<div class="item">
+  							<div id="quote-<?php echo $post->ID;?>" class="quoteContainer" itemprop="review" itemscope itemtype="http://schema.org/Review">
+  								<blockquote class="testimonials-text" itemprop="reviewBody">
+  									<?php the_content(); ?>
+  								</blockquote>
+  								<cite class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  									<span itemprop="name">- <?php echo get_post_meta($post->ID,'_byline',true); ?></span>
+  								</cite>
+  							</div>
+						</div>
+	    					
+					<?php } ?>
 				</div>
 			<?php } else {
 				// no posts found

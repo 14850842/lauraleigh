@@ -4,7 +4,7 @@
 
 <section class="suppliersSection">
 	<div class="container">
-		<div class="publicationInfoSection">
+		<div class="suppliersInfoSection">
 			<?php get_template_part('templates/clients/suppliers','info' ); ?>
 		</div>
 		<div class="suppliersGrid">
@@ -28,7 +28,7 @@
 								</div>
 								<div class="titleContainer">
 									<h3><?php the_title(); ?></h3>
-      								<span class="meta"><?php echo get_post_meta($post->ID,'_ppm_title_meta',true);?></span>
+      								<small><span class="meta"><?php echo get_post_meta($post->ID,'_ppm_title_meta',true);?></span></small>
       							</div>
     						</div>
 		    					

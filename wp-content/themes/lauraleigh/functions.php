@@ -12,9 +12,11 @@ function ppm_scripts_and_styles() {
     if (!is_admin()) {
 
         wp_register_script( 'third-party', get_stylesheet_directory_uri() . '/library/js/third-party.js', array('jquery'), '3.0.0',true);
-        wp_register_script( 'ppm', get_stylesheet_directory_uri() . '/library/js/ppm.js', array('third-party','jquery'), '3.0.0',true);
+        wp_register_script( 'owl', get_stylesheet_directory_uri() . '/library/js/owl.min.js', array('jquery'), '3.0.0',true);
+        wp_register_script( 'ppm', get_stylesheet_directory_uri() . '/library/js/ppm.js', array('third-party','owl','jquery'), '3.0.0',true);
         
         wp_enqueue_script('third-party');
+        wp_enqueue_script('owl');
         wp_enqueue_script('ppm');
 
 
@@ -56,7 +58,7 @@ function cmb_sample_metaboxes( array $meta_boxes ) {
             'id'         => 'image_metabox',
             'title'      => __( 'Image Options', 'cmb' ),
             'description' => __(''),
-            'pages'      => array( 'post'), // Post type
+            'pages'      => array( 'post','page'), // Post type
             'context'    => 'normal',
             'priority'   => 'high',
             'show_names' => true, // Show field names on the left
@@ -144,13 +146,21 @@ function grid_page_images($id) {
 
     if ($entries) {
          $count = sizeof($entries);
+         $num = 0;
 
-        $col = 12 / $count;
+        if ($count < 2) {
+            $col = 12 / $count;
+        } else {
+            $col = 6;
+        }
 
-        foreach ( (array) $entries as $key => $entry ) {
+
+        foreach ( (array) $entries as $key => $entry ) { $num ++;
             echo '<div class="col-xs-'.$col.'">';
                 echo wp_get_attachment_image( $entry['image_id'], 'full', null, array('class' => 'img-responsive') );
             echo '</div>';
+
+            if ($num % 2 == 0) echo '<div class="clearfix"></div>';
         }
     }
 }
@@ -160,10 +170,10 @@ function your_custom_menu_item ( $items, $args ) {
     global $brew_options;
 
     if ($args->theme_location == 'main-nav') {
-        $items .= '<li>';
+        $items .= '<li class="social-nav">';
+        if (!empty($brew_options['instagram_url'])) $items .= '<a target="_blank" title="Follow on Instagram" href="'.$brew_options['instagram_url'].'"><span class="fa fa-instagram"></span></a>';
         if (!empty($brew_options['facebook_url'])) $items .= '<a target="_blank" title="Like on Facebook" href="'.$brew_options['facebook_url'].'"><span class="fa fa-facebook"></span></a>';
         if (!empty($brew_options['twitter_url'])) $items .= '<a target="_blank" title="Follow on Twitter" href="'.$brew_options['twitter_url'].'"><span class="fa fa-twitter"></span></a>';
-        if (!empty($brew_options['pinterest_url'])) $items .= '<a target="_blank" title="Follow on Pinterest" href="'.$brew_options['pinterest_url'].'"><span class="fa fa-pinterest"></span></a>';
         $items .= '</li>';
     }
     return $items;
@@ -227,6 +237,12 @@ function child_sections($sections){
                         'title' => __('pinterest', 'redux-framework-demo'),
                         'desc' => __('Enter your pinterest URL', 'redux-framework-demo'),
                         ),  
+            array(
+                        'id'=>'instagram_url',
+                        'type' => 'text',
+                        'title' => __('Instagram', 'redux-framework-demo'),
+                        'desc' => __('Enter your Instagram URL', 'redux-framework-demo'),
+                        ),  
         )
     );
 
@@ -248,15 +264,15 @@ function woo_story_sharing($title='Share:')
     <ul class="social list-inline">  
         <li>
             <div class="nav-buttons nav-share">
-                <a href="#" onclick="window.open('http://www.facebook.com/sharer.php?s=100&p[title]=<?php echo urlencode($title); ?>&p[summary]=<?php echo urlencode($summary); ?>&p[url]=<?php echo urlencode($url); ?>&p[images][0]=<?php echo urlencode($thumb[0]); ?>', 'sharer', 'toolbar=0,status=0,width=626,height=436');return false;">
+                <span class="link">
                     <span class="icon-wrap"><span class="share"><?php print_r($response->total); ?></span></span>
                     <h3>Shares</h3>
-                </a>
+                </span>
             </div>
         </li>
         <li>
             <div class="nav-buttons">
-                <a href="#" onclick="window.open('http://www.facebook.com/sharer.php?s=100&p[title]=<?php echo urlencode($title); ?>&p[summary]=<?php echo urlencode($summary); ?>&p[url]=<?php echo urlencode($url); ?>&p[images][0]=<?php echo urlencode($thumb[0]); ?>', 'sharer', 'toolbar=0,status=0,width=626,height=436');return false;">
+                <a href="#" class="link" onclick="window.open('http://www.facebook.com/sharer.php?s=100&p[title]=<?php echo urlencode($title); ?>&p[summary]=<?php echo urlencode($summary); ?>&p[url]=<?php echo urlencode($url); ?>&p[images][0]=<?php echo urlencode($thumb[0]); ?>', 'sharer', 'toolbar=0,status=0,width=626,height=436');return false;">
                     <span class="icon-wrap"><svg class="svg-icon shape-facebook">
                                                 <use xlink:href="#shape-facebook"></use>
                                             </svg></span>
@@ -266,7 +282,7 @@ function woo_story_sharing($title='Share:')
         </li>
         <li>  
             <div class="nav-buttons">
-                <a target="_blank" class="social" href="https://twitter.com/share/?counturl=<?php the_permalink();?>&amp;url=<?php the_permalink();?>&amp;text=<?php the_title();?>">
+                <a target="_blank" class="social link" href="https://twitter.com/share/?counturl=<?php the_permalink();?>&amp;url=<?php the_permalink();?>&amp;text=<?php the_title();?>">
                     <span class="icon-wrap"><svg class="svg-icon shape-twitter">
                                                 <use xlink:href="#shape-twitter"></use>
                                             </svg></span>
@@ -276,7 +292,7 @@ function woo_story_sharing($title='Share:')
         </li>
         <li>
             <div class="nav-buttons">
-                <a class="social" target="_blank" onclick="window.open('//pinterest.com/pin/create/button/?url=<?php the_permalink();?>&amp;media=<?php echo $thumb[0];?>', 'sharer', 'toolbar=0,status=0,width=626,height=436');return false;" href="#">
+                <a class="social link" target="_blank" onclick="window.open('//pinterest.com/pin/create/button/?url=<?php the_permalink();?>&amp;media=<?php echo $thumb[0];?>', 'sharer', 'toolbar=0,status=0,width=626,height=436');return false;" href="#">
                     <span class="icon-wrap"><svg class="svg-icon shape-pinterest">
                                                 <use xlink:href="#shape-pinterest"></use>
                                             </svg></span>
@@ -288,3 +304,11 @@ function woo_story_sharing($title='Share:')
     <div class="clearfix"></div>
     <?php
 }
+
+function my_more_link( $link, $link_button ) {
+            
+    return str_replace( $link_button, '<p><a href="' . get_permalink() . '" class="readmore">' . __( $link_button, 'bonestheme' ) . ' <i class="fa fa-caret-right"></i></a> </p>', $link );
+}
+
+add_filter( 'the_content_more_link', 'my_more_link', 10, 2 );
+?>
