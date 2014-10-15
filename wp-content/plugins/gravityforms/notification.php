@@ -47,12 +47,18 @@ Class GFNotification {
         if(rgpost("save")){
 
             check_admin_referer('gforms_save_notification', 'gforms_save_notification');
+            
+            //clear out notification because it could have legacy data populated
+            $notification = array( 'isActive' => isset( $notification['isActive'] ) ? rgar( $notification, 'isActive') : true );
 
             $is_update = true;
 
             if($is_new_notification){
                 $notification_id = uniqid();
                 $notification["id"] = $notification_id;
+            }
+            else {
+				$notification["id"] = $notification_id;
             }
 
             $notification["name"] = rgpost("gform_notification_name");
@@ -855,7 +861,7 @@ Class GFNotification {
         $emails = explode(",", $text);
         foreach($emails as $email){
             $email = trim($email);
-            $invalid_email = GFCommon::is_invalid_or_empty_email($email);
+            $invalid_email = GFCommon::is_invalid_or_empty_email( $email );
             $invalid_variable = !preg_match('/^({[^{]*?:(\d+(\.\d+)?)(:(.*?))?},? *)+$/', $email);
 
             if($invalid_email && $invalid_variable)
@@ -1039,7 +1045,12 @@ class GFNotificationTable extends WP_List_Table {
     }
 
     function display() {
-        extract( $this->_args );
+
+        // ...causing issue: Notice: Indirect modification of overloaded property GFNotificationTable::$_args has no effect
+        //extract( $this->_args ); // gives us $plural, $singular, $ajax, $screen
+
+        $singular = $this->_args['singular'];
+
         ?>
 
         <table class="wp-list-table <?php echo implode( ' ', $this->get_table_classes() ); ?>" cellspacing="0">

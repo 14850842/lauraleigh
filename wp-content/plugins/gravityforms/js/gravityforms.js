@@ -626,7 +626,7 @@ function gformAddListItem(element, max){
     if(jQuery(element).hasClass("gfield_icon_disabled"))
         return;
 
-    var tr = jQuery(element).parent().parent();
+    var tr = jQuery(element).closest('tr');
     var clone = tr.clone();
     clone.find("input, select").val("").attr("tabindex", clone.find('input:last').attr("tabindex"));
     tr.after(clone);
@@ -740,7 +740,7 @@ function gformInitChosenFields(fieldList, noResultsText){
         var element = jQuery(this);
 
         //only initialize once
-        if( element.is(":visible") && element.siblings(".chzn-container").length == 0 ){
+        if( element.is(":visible") && element.siblings(".chosen-container").length == 0 ){
             var options = gform.applyFilters( 'gform_chosen_options', { no_results_text: noResultsText }, element );
             element.chosen( options );
         }
@@ -797,7 +797,8 @@ var GFCalc = function(formId, formulaFields){
             field        = jQuery('#field_' + formId + '_' + formulaField.field_id),
             formulaInput = jQuery('#input_' + formId + '_' + formulaField.field_id),
             previous_val = formulaInput.val(),
-            expr         = calcObj.replaceFieldTags( formId, formulaField.formula, formulaField ).replace(/(\r\n|\n|\r)/gm,""),
+            formula      = gform.applyFilters( 'gform_calculation_formula', formulaField.formula, formulaField, formId, calcObj ),
+            expr         = calcObj.replaceFieldTags( formId, formula, formulaField ).replace(/(\r\n|\n|\r)/gm,""),
             result       = '';
 
         if(calcObj.exprPatt.test(expr)) {
@@ -1168,7 +1169,9 @@ var gform = {
         });
 
         gfMultiFileUploader.toggleDisabled = function (settings, disabled){
-            $("#" + settings.browse_button).prop("disabled", disabled);
+
+            var button = typeof settings.browse_button == "string" ? $("#" + settings.browse_button) : $(settings.browse_button);
+            button.prop("disabled", disabled);
         }
 
         function addMessage(messagesID, message){
@@ -1196,7 +1199,7 @@ var gform = {
                 extension = file.name.split('.').pop();
 
                 if($.inArray(extension, disallowed) > -1){
-                    addMessage(up.settings.gf_vars.message_id, file.name + " - " + strings.illegal_extension)
+                    addMessage(up.settings.gf_vars.message_id, file.name + " - " + strings.illegal_extension);
                     up.removeFile(file);
                     return;
                 }
@@ -1252,7 +1255,8 @@ var gform = {
 
         uploader.bind('Error', function(up, err) {
             if(err.code === plupload.FILE_EXTENSION_ERROR){
-                addMessage(up.settings.gf_vars.message_id, err.file.name + " - " + strings.invalid_file_extension + " " + up.settings.filters[0].extensions);
+                var extensions = typeof up.settings.filters.mime_types != 'undefined' ? up.settings.filters.mime_types[0].extensions /* plupoad 2 */ : up.settings.filters[0].extensions;
+                addMessage(up.settings.gf_vars.message_id, err.file.name + " - " + strings.invalid_file_extension + " " + extensions);
             } else if (err.code === plupload.FILE_SIZE_ERROR) {
                 addMessage(up.settings.gf_vars.message_id, err.file.name + " - " + strings.file_exceeds_limit);
             } else {
@@ -1261,9 +1265,9 @@ var gform = {
                     (err.file ? ", File: " + err.file.name : "") +
                     "</li>";
 
-                $("#" + up.settings.gf_vars.message_id).prepend(m);
+				addMessage(up.settings.gf_vars.message_id, m);
             }
-            up.removeFile(err.file);
+			$('#' + err.file.id ).html('');
 
             up.refresh(); // Reposition Flash
         });
@@ -1271,8 +1275,9 @@ var gform = {
         uploader.bind('FileUploaded', function(up, file, result) {
             var response = $.secureEvalJSON(result.response);
             if(response.status == "error"){
-                $('#' + up.settings.filelist).prepend(response.error.message);
-                return;
+				addMessage(up.settings.gf_vars.message_id, file.name + " - " + response.error.message);
+				$('#' + file.id ).html('');
+				return;
             }
 
             var html = '<strong>' + file.name + '</strong>';
@@ -1292,13 +1297,11 @@ var gform = {
             var fieldID = up.settings.multipart_params["field_id"];
 
             if(file.percent == 100){
-                var inputName = getInputName(fieldID),
-                    tempFileName = uniqueID + "_" + inputName + "_" + file.target_name;
-                if(response.data.uploaded_filename === file.name)
+                if(response.status && response.status == 'ok'){
                     addFile(fieldID, response.data);
-                else
-                    addMessage(up.settings.gf_vars.message_id, strings.unknown_error)
-
+                }  else {
+                    addMessage(up.settings.gf_vars.message_id, strings.unknown_error);
+                }
             }
 
         });
@@ -1380,11 +1383,11 @@ function gformInitSpinner( formId, spinnerUrl ) {
     if( typeof spinnerUrl == 'undefined' || ! spinnerUrl )
         spinnerUrl = gform.applyFilters( "gform_spinner_url", gf_global.spinnerUrl, formId );
 
-    jQuery( '#gform_' + formId ).submit( function(){
-        if( jQuery( '#gform_ajax_spinner_' . formId ).length == 0 ) {
-            jQuery( '#gform_submit_button_' + formId + ', #gform_wrapper_' + formId + ' .gform_next_button, #gform_wrapper_' + formId + ' .gform_image_button')
-                .after( '<img id="gform_ajax_spinner_' + formId + '"  class="gform_ajax_spinner" src="' + spinnerUrl + '" alt="" />' );
-        }
-    } );
+	jQuery('#gform_' + formId).submit(function () {
+		if (jQuery('#gform_ajax_spinner_' + formId).length == 0) {
+			jQuery('#gform_submit_button_' + formId + ', #gform_wrapper_' + formId + ' .gform_next_button')
+				.after('<img id="gform_ajax_spinner_' + formId + '"  class="gform_ajax_spinner" src="' + spinnerUrl + '" alt="" />');
+		}
+	});
 
 }
