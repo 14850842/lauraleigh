@@ -20,13 +20,14 @@ body > svg {
 
 .navbar-inverse {
 	border: none;
-	padding-top: 10px;
+	padding-top: 0px;
+	border-top: 5px solid @gray-darker;
 }
 
 .divider::before, .divider::after {
-position: absolute;
-content: '';
-pointer-events: none;
+	position: absolute;
+	content: '';
+	pointer-events: none;
 }
 
 .divider {
@@ -87,6 +88,13 @@ pointer-events: none;
 .header {
 	.navbar-nav 
 		> li {
+			&.current-menu-item,
+			&.current_page_item,
+			&.current_page_ancestor{
+	        	.nav-link {
+		        	border-color: @gray-darker;
+		        }
+		    }
 			a {
 				display: inline-block;
 				font-size: 16px;
@@ -97,7 +105,7 @@ pointer-events: none;
 		        	padding-bottom: 5px;
 		        	border-bottom: 1px solid transparent;
 		        }
-		        &:hover {
+		        &:hover{
 		        	.nav-link {
 			        	border-color: @gray-darker;
 			        }
