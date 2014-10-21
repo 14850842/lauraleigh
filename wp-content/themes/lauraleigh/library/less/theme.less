@@ -9,6 +9,10 @@ body > svg {
 .svg-logo {
   height: 19px;
   fill: @gray;
+  .transition(0.3s);
+  &:hover{
+  	.opacity(.5);
+  }
 }
 
 .svg-icon {
@@ -166,7 +170,22 @@ body > svg {
 	}
 }
 
-
+.singleHeader{
+	padding-bottom: 40px;
+	.postTitle{
+		font-size: 3em;
+		a{
+			color: @gray-dark;
+			&:hover{
+				text-decoration: none;
+			}
+		}
+	}
+	.metaContainer{
+		text-align: center;
+		margin-bottom: 55px;
+	}
+}
 .postTitle {
 	font-family: @font-family-serif;
 	font-style: italic;
@@ -195,6 +214,7 @@ body > svg {
 	color:@gray-dark;
 	background: none;
 	border: none;
+	margin-right: 20px;
 	i {
 		margin-left: 10px;
 	}
@@ -487,7 +507,7 @@ body > svg {
 	display: block;
 	margin: 0 auto;
 	padding: 0;
-	font-size: 2em;
+	font-size: 1.3em;
 }
 
 
@@ -632,6 +652,15 @@ body > svg {
 	transition-delay: 0.1s;
 	-webkit-transform: translateX(0);
 	transform: translateX(0);
+}
+
+// Product Page
+.page-id-19{
+	.pageContent{
+		img{
+			margin-bottom: 30px;
+		}
+	}
 }
 
 
