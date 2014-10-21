@@ -8,7 +8,6 @@
 			<div class="textContainer">
 				<h2 class="sectionTitle">My Work has been Featured Here:</h2>
 				<div class="titleDivider divider ss-style-roundedsplit"></div>
-				<?php the_content(); //Add View More ?>
 			</div>
 		</div>
 		<div class="publicationGrid">

@@ -1,11 +1,12 @@
 <?php
+global $exclude_post;
 	/* Grid Post Template */
 ?>
 
 <section class="postSection">
 	<div class="container">
 		<?php
-			$args = array('post_type'=>'post','posts_per_page'=>6);
+			$args = array('post_type'=>'post','posts_per_page'=>6,'post__not_in'=>array($exclude_post));
 			// The Query
 			$query = new WP_Query( $args );
 
