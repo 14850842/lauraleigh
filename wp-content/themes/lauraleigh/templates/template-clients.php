@@ -9,14 +9,17 @@ get_header();
 
 	get_template_part('templates/clients/grid','clients');
 
-	get_template_part('templates/clients/testimonials');
+	if (!is_page( 'pricing' ) && !is_page( 'products' )){
+		
+		get_template_part('templates/clients/testimonials');
 
-	get_template_part('templates/clients/publications');
+		get_template_part('templates/clients/publications');
 
-	get_template_part('templates/clients/faq');
+		get_template_part('templates/clients/faq');
 
-	get_template_part('templates/clients/suppliers');
-
+		get_template_part('templates/clients/suppliers');
+	};
+	
 	get_template_part('templates/features');
 
 get_footer();

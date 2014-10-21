@@ -62,6 +62,7 @@ define('NONCE_SALT',       'put your unique phrase here');
 $table_prefix  = 'wp_';
 
 /**
+<<<<<<< HEAD
  * WordPress Localized Language, defaults to English.
  *
  * Change this to localize WordPress. A corresponding MO file for the chosen
@@ -72,6 +73,8 @@ $table_prefix  = 'wp_';
 define('WPLANG', '');
 
 /**
+=======
+>>>>>>> origin/master
  * For developers: WordPress debugging mode.
  *
  * Change this to true to enable the display of notices during development.

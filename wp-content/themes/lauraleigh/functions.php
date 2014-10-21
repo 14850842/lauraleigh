@@ -165,6 +165,7 @@ function cmb_sample_metaboxes( array $meta_boxes ) {
     $meta_boxes['about_metabox'] = array(
         'id'         => 'about_metabox',
         'title'      => __( 'Home Page Text', 'cmb' ),
+        'show_on' => array( 'key' => 'page-template', 'value' => 'templates/template-home.php' ),
         'pages'      => array( 'page', ), // Post type
         'context'    => 'normal',
         'priority'   => 'high',
