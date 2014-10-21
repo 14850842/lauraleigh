@@ -87,6 +87,43 @@ function cmb_sample_metaboxes( array $meta_boxes ) {
         )
     );
 
+    $meta_boxes['link_metabox'] = array(
+        'id'         => 'link_metabox',
+        'title'      => __( 'Link Options', 'cmb' ),
+        'description' => __(''),
+        'pages'      => array( 'page'), // Post type
+        'context'    => 'side',
+        'priority'   => 'low',
+        'show_names' => true, // Show field names on the left
+        // 'cmb_styles' => true, // Enqueue the CMB stylesheet on the frontend
+        'fields'     => array(
+            array(
+                'id'          => $prefix . 'link_group',
+                'type'        => 'group',
+                'description' => __( 'Add links to Content', 'cmb' ),
+                'options'     => array(
+                    'group_title'   => __( 'Link {#}', 'cmb' ), // since version 1.1.4, {#} gets replaced by row number
+                    'add_button'    => __( 'Add Another Link', 'cmb' ),
+                    'remove_button' => __( 'Remove Link', 'cmb' ),
+                    'sortable'      => true, // beta
+                ),
+                // Fields array works the same, except id's only need to be unique for this group. Prefix is not needed.
+                'fields'      => array(
+                    array(
+                        'name' => 'Link Text',
+                        'id'   => 'link_text',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'name' => 'Link',
+                        'id'   => 'link',
+                        'type' => 'text',
+                    ),
+                ),
+            ),
+        )
+    );
+
     $meta_boxes['faq_metabox'] = array(
         'id' => 'faq-information',
         'title' => 'FAQ Information',
@@ -146,6 +183,18 @@ function cmb_sample_metaboxes( array $meta_boxes ) {
     );
 
     return $meta_boxes;
+}
+
+function get_page_link_info() {
+    global $post;
+    $links = get_post_meta( $post->ID, '_ppm_link_group', true );
+    if ($links) {
+        echo '';
+            foreach ( (array) $links as $key => $link ) {
+                echo '<a href="'.$link['link'].'" class="readmore">'.$link['link_text'].'<i class="fa fa-caret-right"></i> </a> ';
+            }
+        echo '';
+    }
 }
 
 // Location Custom Taxonomy

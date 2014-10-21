@@ -13,6 +13,8 @@
 			<h2 class="pageTitle"><?php the_title(); ?></h2>
 			<div class="titleDivider divider ss-style-roundedsplit">&nsbp;</div>
 			<?php the_content(); ?>
+			<?php get_page_link_info(); ?>
+			
 		</div>
 	</div>
 </div>

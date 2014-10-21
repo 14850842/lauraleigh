@@ -792,3 +792,41 @@ z-index: 200;
   	.rotate(180deg);
   }
 }
+
+
+.gform_wrapper{
+  .gform_body{
+    .gform_fields{
+      .gfield{
+        .gfield_label{
+          color: @gray-darker;
+          font-weight: normal;
+        }
+        input[type=text],
+        textarea{
+          border:2px solid @gray-lighter;
+          padding: 10px;
+          font-size: @font-size-base;
+          color: @gray-darker;
+        }
+      }
+    }
+  }
+  .gform_footer{
+    input[type=submit]{
+      .btn();
+      .btn-default();
+      text-transform: uppercase;
+      border-width: 2px;
+      .transition(0.3s);
+    }
+  }
+}
+.gform_confirmation_message{
+  color: @brand-danger;
+  font-size: @font-size-base;
+  padding: 20px;
+  text-transform: uppercase;
+  text-align: center;
+  border: 4px solid @brand-primary;
+}
