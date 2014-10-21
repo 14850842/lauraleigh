@@ -15,7 +15,9 @@
 				
 				while ( $the_query->have_posts() ) { $the_query->the_post(); global $more; $more = 0; ?>
 					<div class="textContainer">
-						<?php the_content('More About Me'); //Add View More ?>
+						<?php
+							echo get_post_meta( $post->ID, '_ppm_about_text', true );
+						?>
 					</div>
 				<?php }
 			} else {

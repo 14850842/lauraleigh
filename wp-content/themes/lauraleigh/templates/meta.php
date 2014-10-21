@@ -14,6 +14,26 @@ global $post;
 		<?php echo get_the_time(get_option('date_format')) ?>
 	</time>
 			
+	<span class="location">
+		<?php 
+		$location = wp_get_post_terms($post->ID, 'shoot_location');
+		if(!empty($location)){ ?>
+		<svg class="svg-icon shape-category">
+		  	<use xlink:href="#shape-category"></use>
+		</svg>
+		<?php 
+		$term_link = get_term_link( $location[0] );
+   
+		    // If there was an error, continue to the next term.
+		    if ( is_wp_error( $term_link ) ) {
+		        continue;
+		    }
+		    // We successfully got a link. Print it out.
+		    echo '<a href="' . esc_url( $term_link ) . '">' . $location[0]->name . '</a>';
+
+		}?>
+	</span>
+
 	<span class="category">
 		<svg class="svg-icon shape-category">
 		  	<use xlink:href="#shape-category"></use>

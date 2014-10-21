@@ -54,80 +54,123 @@ function cmb_sample_metaboxes( array $meta_boxes ) {
         ),
     );
 
-    $meta_boxes['image_metabox'] = array(
-            'id'         => 'image_metabox',
-            'title'      => __( 'Image Options', 'cmb' ),
-            'description' => __(''),
-            'pages'      => array( 'post','page'), // Post type
-            'context'    => 'normal',
-            'priority'   => 'high',
-            'show_names' => true, // Show field names on the left
-            // 'cmb_styles' => true, // Enqueue the CMB stylesheet on the frontend
-            'fields'     => array(
-                array(
-                    'id'          => $prefix . 'image_group',
-                    'type'        => 'group',
-                    'description' => __( 'Add Blog Featured Portraits', 'cmb' ),
-                    'options'     => array(
-                        'group_title'   => __( 'Image {#}', 'cmb' ), // since version 1.1.4, {#} gets replaced by row number
-                        'add_button'    => __( 'Add Another Image', 'cmb' ),
-                        'remove_button' => __( 'Remove Image', 'cmb' ),
-                        'sortable'      => true, // beta
-                    ),
-                    // Fields array works the same, except id's only need to be unique for this group. Prefix is not needed.
-                    'fields'      => array(
-                        array(
-                            'name' => 'Entry Image',
-                            'id'   => 'image',
-                            'type' => 'file',
-                        ),
-                    ),
-                ),
-            )
-        );
 
-        $meta_boxes['faq_metabox'] = array(
-            'id' => 'faq-information',
-            'title' => 'FAQ Information',
-            'pages' => array('page'), // post type
-            'show_on' => array( 'key' => 'page-template', 'value' => 'templates/template-faq.php' ),
-            'context' => 'normal', //  'normal', 'advanced', or 'side'
-            'priority' => 'high',  //  'high', 'core', 'default' or 'low'
-            'show_names' => true, // Show field names on the left
-            'fields' => array(
-                array(
-                    'id'          => $prefix . 'faq_group',
-                    'type'        => 'group',
-                    'description' => __( 'Add FAQ', 'cmb' ),
-                    'options'     => array(
-                        'group_title'   => __( 'FAQ {#}', 'cmb' ), // since version 1.1.4, {#} gets replaced by row number
-                        'add_button'    => __( 'Add Entry', 'cmb' ),
-                        'remove_button' => __( 'Remove Entry', 'cmb' ),
-                        'sortable'      => true, // beta
-                    ),
-                    // Fields array works the same, except id's only need to be unique for this group. Prefix is not needed.
-                    'fields'      => array(
-                        array(
-                            'name' => 'Entry Title',
-                            'id'   => 'title',
-                            'type' => 'text',
-                            // 'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
-                        ),
-                        array(
-                            'name' => 'Description',
-                            'description' => 'Write a short description for this entry',
-                            'id'   => 'description',
-                            'type' => 'textarea_small',
-                        ),
+    $meta_boxes['image_metabox'] = array(
+        'id'         => 'image_metabox',
+        'title'      => __( 'Image Options', 'cmb' ),
+        'description' => __(''),
+        'pages'      => array( 'post','page'), // Post type
+        'context'    => 'normal',
+        'priority'   => 'high',
+        'show_names' => true, // Show field names on the left
+        // 'cmb_styles' => true, // Enqueue the CMB stylesheet on the frontend
+        'fields'     => array(
+            array(
+                'id'          => $prefix . 'image_group',
+                'type'        => 'group',
+                'description' => __( 'Add Blog Featured Portraits', 'cmb' ),
+                'options'     => array(
+                    'group_title'   => __( 'Image {#}', 'cmb' ), // since version 1.1.4, {#} gets replaced by row number
+                    'add_button'    => __( 'Add Another Image', 'cmb' ),
+                    'remove_button' => __( 'Remove Image', 'cmb' ),
+                    'sortable'      => true, // beta
+                ),
+                // Fields array works the same, except id's only need to be unique for this group. Prefix is not needed.
+                'fields'      => array(
+                    array(
+                        'name' => 'Entry Image',
+                        'id'   => 'image',
+                        'type' => 'file',
                     ),
                 ),
             ),
-        );
+        )
+    );
 
-    
+    $meta_boxes['faq_metabox'] = array(
+        'id' => 'faq-information',
+        'title' => 'FAQ Information',
+        'pages' => array('page'), // post type
+        'show_on' => array( 'key' => 'page-template', 'value' => 'templates/template-faq.php' ),
+        'context' => 'normal', //  'normal', 'advanced', or 'side'
+        'priority' => 'high',  //  'high', 'core', 'default' or 'low'
+        'show_names' => true, // Show field names on the left
+        'fields' => array(
+            array(
+                'id'          => $prefix . 'faq_group',
+                'type'        => 'group',
+                'description' => __( 'Add FAQ', 'cmb' ),
+                'options'     => array(
+                    'group_title'   => __( 'FAQ {#}', 'cmb' ), // since version 1.1.4, {#} gets replaced by row number
+                    'add_button'    => __( 'Add Entry', 'cmb' ),
+                    'remove_button' => __( 'Remove Entry', 'cmb' ),
+                    'sortable'      => true, // beta
+                ),
+                // Fields array works the same, except id's only need to be unique for this group. Prefix is not needed.
+                'fields'      => array(
+                    array(
+                        'name' => 'Entry Title',
+                        'id'   => 'title',
+                        'type' => 'text',
+                        // 'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
+                    ),
+                    array(
+                        'name' => 'Description',
+                        'description' => 'Write a short description for this entry',
+                        'id'   => 'description',
+                        'type' => 'textarea_small',
+                    ),
+                ),
+            )
+        ),
+    );
+
+    $meta_boxes['about_metabox'] = array(
+        'id'         => 'about_metabox',
+        'title'      => __( 'Home Page Text', 'cmb' ),
+        'pages'      => array( 'page', ), // Post type
+        'context'    => 'normal',
+        'priority'   => 'high',
+        'show_names' => true, // Show field names on the left
+
+        // 'cmb_styles' => true, // Enqueue the CMB stylesheet on the frontend
+        'fields'     => array(
+            array(
+                'name'       => __( 'About Excerpt Text', 'cmb' ),
+                'desc'       => __( 'Text to be shown on the Home page for the About section', 'cmb' ),
+                'id'         => $prefix . 'about_text',
+                'type'       => 'textarea',
+                'show_on_cb' => 'cmb_test_text_show_on_cb', // function should return a bool value
+            ),
+        ),
+    );
 
     return $meta_boxes;
 }
+
+// Location Custom Taxonomy
+register_taxonomy( 'shoot_location', 
+    array('post'), /* if you change the name of register_post_type( 'custom_type', then you have to change this */
+    array('hierarchical' => true,     /* if this is true, it acts like categories */             
+        'labels' => array(
+            'name' => __( 'Shoot Location', 'bonestheme' ), /* name of the custom taxonomy */
+            'singular_name' => __( 'Shoot Location', 'bonestheme' ), /* single taxonomy name */
+            'search_items' =>  __( 'Search Shoot Locations', 'bonestheme' ), /* search title for taxomony */
+            'all_items' => __( 'All Shoot Locations', 'bonestheme' ), /* all title for taxonomies */
+            'parent_item' => __( 'Parent Shoot Location', 'bonestheme' ), /* parent title for taxonomy */
+            'parent_item_colon' => __( 'Parent Shoot Location:', 'bonestheme' ), /* parent taxonomy title */
+            'edit_item' => __( 'Edit Shoot Location', 'bonestheme' ), /* edit custom taxonomy title */
+            'update_item' => __( 'Update Shoot Location', 'bonestheme' ), /* update title for taxonomy */
+            'add_new_item' => __( 'Add New Shoot Location', 'bonestheme' ), /* add new title for taxonomy */
+            'new_item_name' => __( 'New Shoot Location Name', 'bonestheme' ) /* name title for taxonomy */
+        ),
+        'show_admin_column' => true, 
+        'show_ui' => true,
+        'query_var' => true,
+        'rewrite' => array( 'slug' => 'shoot-location' ),
+    )
+);   
+
 
 function grid_post_images($id) {
     $entries = get_post_meta( $id, '_ppm_image_group', true );

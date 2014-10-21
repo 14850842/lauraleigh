@@ -20,7 +20,7 @@ body > svg {
 
 .navbar-inverse {
 	border: none;
-	padding-top: 0px;
+	padding-top: 5px;
 	border-top: 5px solid @gray-darker;
 }
 
@@ -132,6 +132,9 @@ body > svg {
 
 .imageContainer {
 	position: relative;
+	img{
+		margin: auto;
+	}
 }
 
 
@@ -378,16 +381,23 @@ body > svg {
 		border-bottom:none;
 		margin-bottom: 35px;
 		text-align: center;
+		text-transform: uppercase;
 		li.active,li {
 			display: inline-block;
 			float: none;
 			> a {
 				border: none;
+				border-bottom: 1px solid transparent;
+				color: @gray;
 				&:hover,&:focus{
 					background-color: transparent;
-					border: none;
+					border: none !important;
+					border-bottom: 1px solid @gray !important;
 				}
 			}
+		}
+		li.active > a{
+			border-bottom: 1px solid @gray;
 		}
 	}
 	.faq-title {

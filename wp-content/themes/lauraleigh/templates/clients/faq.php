@@ -3,6 +3,7 @@
 /* FAQ */
 
 ?>
+
 <section class="faqSection">
 	<div class="container">
 		<?php
@@ -43,7 +44,7 @@
 
 			$faqs = get_post_meta($post->ID,'_ppm_faq_group',true); 
 
-			$tab_content .= '<div class="tab-pane" id="'.$post->post_name.'"><div class="faq-group" id="accordion'.$post->ID.'">';
+			$tab_content .= '<div class="tab-pane in fade" id="'.$post->post_name.'"><div class="faq-group" id="accordion'.$post->ID.'">';
 
 			if (!empty($faqs)) {
 				foreach ($faqs as $key => $faq) {
@@ -80,3 +81,9 @@
 		</ul>
 	</div>
 </section>
+
+<script>
+  jQuery(function () {
+    jQuery('.nav-tabs a:first').tab('show')
+  })
+</script>
