@@ -36,9 +36,11 @@ Stylesheet: Form Styles
 		input[type=url],
 		textarea {
 			padding: 3px 6px;
-			background: #efefef;
-			border: 2px solid #cecece;
 			line-height: 1.5em;
+	          border:2px solid @gray-lighter;
+	          padding: 10px;
+	          font-size: @font-size-base;
+	          color: @gray-darker;
 
 			&:focus {
 				background: #fff;
@@ -61,6 +63,10 @@ Stylesheet: Form Styles
 		input[type=url] {
 			max-width: 400px;
 			min-width: 250px;
+          border:2px solid @gray-lighter;
+          padding: 10px;
+          font-size: @font-size-base;
+          color: @gray-darker;
 		}
 
 		textarea {
@@ -73,11 +79,17 @@ Stylesheet: Form Styles
 }
 
 	/* comment submit button */
-	#submit {}
+	#submit {
+		.btn();
+		.btn-default();
+		border-width: 2px;
+	}
 
 	/* comment form title */
 	#comment-form-title {
 		margin: 0 0 1.1em;
+		font-family: @font-family-serif;
+		font-style: italic;
 	}
 
 	/* cancel comment reply link */

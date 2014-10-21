@@ -11,16 +11,25 @@ Stylesheet: Comments
 
 /* h3 comment title */
 #comments {
+  .make-md-column(8);
+  .make-md-column-offset(2);
+  padding-left: 0px;
+  padding-right: 0px;
   margin-bottom: 20px;
 
   > h3 {
     line-height: 1;
     margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+    padding-bottom: 30px;
+    border-bottom: 1px solid @gray-light;
+    margin-bottom: 30px;
   }
 
   .comment-container {
-    padding: 20px 20px;
-    border-bottom: 1px solid #eee;
+    padding: 20px 0px;
+    border-bottom: 1px solid @gray-lighter;
   }
 
 
@@ -122,14 +131,12 @@ Stylesheet: Comments
   }
   .pingback {}
   .bypostauthor {
-    background: lighten(@brand-primary, 43.5%);
+    background-color: #fff;
   }
   .comment-author {
-    width: 10%;
     float: left;
     img {
-      width: 100%;
-      height: auto;
+      border-radius: 100%;
     }
   }
   .comment-author-admin {}
@@ -140,18 +147,23 @@ Stylesheet: Comments
 
 
   /* vcard */
-  .vcard {
+  .vcard {}
 
     cite.fn {
-      font-weight: 700;
+      font-weight: 300;
       font-style: normal;
+      font-family: @font-family-base;
+      font-size: 1.2em;
+      color: @brand-primary;
 
-      a.url {}
+      a.url {
+        color: @brand-primary;
+      }
 
     }
 
     time {
-      float: right;
+      font-family: @font-family-serif;
 
       a {
         color: #999;
@@ -168,12 +180,10 @@ Stylesheet: Comments
     img.photo {}
 
     img.avatar {
-      padding: 2px;
-      border: 1px solid #cecece;
-      background: #fff;
+      padding: 0px;
     }
 
-  } /* end .commentlist .vcard */
+   /* end .commentlist .vcard */
 
 
   /* comment meta */
@@ -204,13 +214,14 @@ Stylesheet: Comments
   .comment-reply-link {
     text-decoration: none;
     float: right;
-    background: #4598bb;
     padding: 3px 5px;
-    color: #fff;
+    color: @gray-darker;
     opacity: 0.65;
     margin-bottom: 10px;
-    font-weight: 700;
+    font-weight: 300;
     font-size: 0.9em;
+    font-family: @font-family-serif;
+    text-decoration: underline;
 
     &:hover,
     &:focus {
@@ -230,7 +241,9 @@ Stylesheet: Comments
 }
 
 #respond {
-  padding: 20px;
+  .make-md-column(8);
+  .make-md-column-offset(2);
+  padding: 20px 0;
 }
 
 #pings {

@@ -3,7 +3,7 @@
     
     <?php get_template_part( 'templates/posts/feature','image' ); ?>
 
-    <div class="divider ss-style-roundedsplit">  
+    <div class="divider">  
     	<div class="container">
 			<div id="content" class="clearfix row">
 
@@ -15,7 +15,7 @@
 
 						<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
 
-							<?php get_template_part('templates/posts/post','header'); ?>
+							<?php get_template_part('templates/posts/single-post','header'); ?>
 
 							<section class="entry-content single-content clearfix" itemprop="articleBody">
 								<?php the_content(); ?>
