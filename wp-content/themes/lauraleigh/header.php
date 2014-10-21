@@ -72,15 +72,28 @@
 
           </div>
         </div> 
+
         <?php if (!is_home() && !is_front_page()) : ?>
-         	<div class="subMenu">
-         		<div class="container">
-            		<?php secondary_nav(); ?>
-            		<div class="pull-right">
-            			<?php get_template_part('searchform'); ?>
-            		</div>
-            	</div>
-            </div>
+        	<?php if (is_single() || is_page_template('templates/template-blog.php') || is_archive()) : ?>
+	         	<div class="subMenu">
+	         		<div class="container">
+	            		<?php secondary_nav('secondary-nav')?>
+	            		<div class="pull-right">
+	            			<?php get_template_part('searchform'); ?>
+	            		</div>
+	            	</div>
+	            </div>
+	        <?php elseif (is_page(16)): ?>
+	        	<div class="subMenu">
+	         		<div class="container">
+
+	            		<?php secondary_nav('clients-nav'); ?>
+	            		<div class="pull-right">
+	            			<?php get_template_part('searchform'); ?>
+	            		</div>
+	            	</div>
+	            </div>
+	        <?php endif; ?>
         <?php endif; ?>
         
       </nav>
