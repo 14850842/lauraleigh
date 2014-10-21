@@ -43,10 +43,31 @@ body > svg {
 	}
 }
 
+.pace .pace-progress {
+  background: #555;
+  position: fixed;
+  z-index: 2000;
+  top: 32px;
+  left: 0;
+  height: 5px;
+
+  -webkit-transition: width 1s;
+  -moz-transition: width 1s;
+  -o-transition: width 1s;
+  transition: width 1s;
+}
+
+.pace-inactive {
+  display: none;
+}
+
 .navbar-inverse {
 	border: none;
 	padding-top: 5px;
-	border-top: 5px solid @gray-darker;
+	border-top: 5px solid transparent;
+	.pace-done  & {
+		border-top: 5px solid @gray-darker;
+	}
 }
 
 .divider::before, .divider::after {
