@@ -1,10 +1,14 @@
 jQuery(document).ready(function() {
 	// Can also be used with $(document).ready()
+      jQuery('#enquiryModal').on('show.bs.modal', function (e) {
+          var wpackage = e.relatedTarget.dataset.package;
+          jQuery('#input_2_3').val(wpackage);
+        });
 });
 
 jQuery(window).load(function() {
-	jQuery("#owl-testimonials").owlCarousel({
- 
+      jQuery("#owl-testimonials").owlCarousel({
+
             navigation : true, // Show next and prev buttons
             slideSpeed : 300,
             paginationSpeed : 400,
@@ -22,5 +26,6 @@ jQuery(window).load(function() {
             // itemsMobile : false
        
         });
+
 
 });
