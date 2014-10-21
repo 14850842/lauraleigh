@@ -4,7 +4,7 @@
 
 <?php global $post; ?>
 <?php global $more; $more = 0; ?>
-<div class="pageContent">
+<div id="<?php echo $post->post_name; ?>" class="pageContent">
 	<div class="row">
 		<div class="col-xs-6">
 			<?php grid_page_images($post->ID); ?>

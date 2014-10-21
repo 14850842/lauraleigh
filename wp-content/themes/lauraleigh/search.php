@@ -1,26 +1,46 @@
-<?php
-// Fix for the WordPress 3.0 "paged" bug.
-$paged = 1;
-if ( get_query_var( 'paged' ) ) { $paged = get_query_var( 'paged' ); }
-if ( get_query_var( 'page' ) ) { $paged = get_query_var( 'page' ); }
-$paged = intval( $paged );
+<?php get_header(); ?>
 
-// Exclude categories on the homepage.
-
-$query_args = array(
-		  'post_type' => 'post', 
-		  'paged' => $paged
-		);
-
-query_posts( $query_args );
-?>
-
-<div id="wrapper" class="container">
+    <div id="wrapper" class="container">
 	<div id="content" class="clearfix row">
 
 		<div id="main" class="col-md-12 clearfix" role="main">
 
-				<h2 class="sectionTitle text-center"><?php the_title();?></h2>
+
+				<?php if (is_category()) { ?>
+					<h1 class="sectionTitle text-center archive-title h2">
+						<span><?php _e( 'Posts Categorized:', 'bonestheme' ); ?></span> <?php single_cat_title(); ?>
+					</h1>
+
+				<?php } elseif (is_tag()) { ?>
+					<h1 class="sectionTitle text-center archive-title h2">
+						<span><?php _e( 'Posts Tagged:', 'bonestheme' ); ?></span> <?php single_tag_title(); ?>
+					</h1>
+
+				<?php } elseif (is_author()) {
+					global $post;
+					$author_id = $post->post_author;
+				?>
+					<h1 class="sectionTitle text-center archive-title h2">
+
+						<span><?php _e( 'Posts By:', 'bonestheme' ); ?></span> <?php the_author_meta('display_name', $author_id); ?>
+
+					</h1>
+				<?php } elseif (is_day()) { ?>
+					<h1 class="sectionTitle text-center archive-title h2">
+						<span><?php _e( 'Daily Archives:', 'bonestheme' ); ?></span> <?php the_time('l, F j, Y'); ?>
+					</h1>
+
+				<?php } elseif (is_month()) { ?>
+						<h1 class="sectionTitle text-center archive-title h2">
+							<span><?php _e( 'Monthly Archives:', 'bonestheme' ); ?></span> <?php the_time('F Y'); ?>
+						</h1>
+
+				<?php } elseif (is_year()) { ?>
+						<h1 class="sectionTitle text-center archive-title h2">
+							<span><?php _e( 'Yearly Archives:', 'bonestheme' ); ?></span> <?php the_time('Y'); ?>
+						</h1>
+				<?php } ?>
+
 				<div class="titleDivider divider ss-style-roundedsplit">&nsbp;</div>
 
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -47,6 +67,7 @@ query_posts( $query_args );
 					</ul>
 				</nav>
 
+
 				<?php else : ?>
 
 					<article id="post-not-found" class="hentry clearfix">
@@ -68,6 +89,4 @@ query_posts( $query_args );
 	</div> <?php // end #content ?>
 </div> <?php // end #wrapper ?>
 
-
-
-
+<?php get_footer(); ?>

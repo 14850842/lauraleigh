@@ -1,9 +1,35 @@
 jQuery(document).ready(function() {
 	// Can also be used with $(document).ready()
-      jQuery('#enquiryModal').on('show.bs.modal', function (e) {
-          var wpackage = e.relatedTarget.dataset.package;
-          jQuery('#input_2_3').val(wpackage);
-        });
+    jQuery('#enquiryModal').on('show.bs.modal', function (e) {
+        var wpackage = e.relatedTarget.dataset.package;
+        jQuery('#input_2_3').val(wpackage);
+      });
+
+      var ias = jQuery.ias({
+        container:  "#main",
+        item:       ".item",
+        next:       ".prev-link a"
+      });
+
+      ias.extension(new IASSpinnerExtension());            // shows a spinner (a.k.a. loader)
+      ias.extension(new IASTriggerExtension({
+          html: '<div class="nav-buttons loadmore"><a href="#" class="link"><span class="icon-wrap"><svg class="svg-icon shape-plus"><use xlink:href="#shape-plus"></use></svg></span><h3>Load More</h3></a></div>'
+      })); // shows a trigger after page 3
+      ias.extension(new IASNoneLeftExtension({
+        text: 'There are no more pages left to load.'      // override text when no pages left
+    }));
+
+    jQuery('.scrollit a').on('click',function(event){
+        var jQueryanchor = jQuery(this);
+        
+        
+        jQuery('html, body').stop().animate({
+            scrollTop: jQuery(jQueryanchor.attr('href')).offset().top-200
+        }, 1500);
+        
+        event.preventDefault();
+    });
+
 });
 
 jQuery(window).load(function() {
@@ -15,7 +41,7 @@ jQuery(window).load(function() {
             singleItem:true,
             pagination:false,
             autoHeight : true,
-            navigationText: ['<div class="nav-buttons"><span class="link"><span class="icon-wrap"><svg class="svg-icon shape-largearrow"><use xlink:href="#shape-largearrow"></use></svg></span><h3>Previous</h3></span>','<div class="nav-buttons"><span class="link"><span class="icon-wrap"><svg class="svg-icon shape-largearrow"><use xlink:href="#shape-largearrow"></use></svg></span><h3>Next</h3></span>'],
+            navigationText: ['<div class="nav-buttons"><span class="link"><span class="icon-wrap"><svg class="svg-icon shape-largearrow"><use xlink:href="#shape-largearrow"></use></svg></span><h3>Previous</h3></span></div>','<div class="nav-buttons"><span class="link"><span class="icon-wrap"><svg class="svg-icon shape-largearrow"><use xlink:href="#shape-largearrow"></use></svg></span><h3>Next</h3></span></div>'],
             transitionStyle : "fade"
        
             // "singleItem:true" is a shortcut for:

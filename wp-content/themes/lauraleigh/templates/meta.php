@@ -18,8 +18,8 @@ global $post;
 		<?php 
 		$location = wp_get_post_terms($post->ID, 'shoot_location');
 		if(!empty($location)){ ?>
-		<svg class="svg-icon shape-category">
-		  	<use xlink:href="#shape-category"></use>
+		<svg class="svg-icon shape-mappin">
+		  	<use xlink:href="#shape-mappin"></use>
 		</svg>
 		<?php 
 		$term_link = get_term_link( $location[0] );

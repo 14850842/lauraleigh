@@ -4,7 +4,7 @@
 
 ?>
 
-<section class="faqSection">
+<section id="faq" class="faqSection">
 	<div class="container">
 		<?php
 			$args = array('post_type'=>'page','pagename'=>'faqs');

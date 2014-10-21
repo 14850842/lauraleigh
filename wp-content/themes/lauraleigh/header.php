@@ -67,11 +67,21 @@
             </div>
 
             <div class="navbar-collapse collapse navbar-responsive-collapse">
-              <?php bones_main_nav(); ?>
-
+            	<?php bones_main_nav(); ?>
             </div>
+
           </div>
         </div> 
+        <?php if (!is_home() && !is_front_page()) : ?>
+         	<div class="subMenu">
+         		<div class="container">
+            		<?php secondary_nav(); ?>
+            		<div class="pull-right">
+            			<?php get_template_part('searchform'); ?>
+            		</div>
+            	</div>
+            </div>
+        <?php endif; ?>
         
       </nav>
 

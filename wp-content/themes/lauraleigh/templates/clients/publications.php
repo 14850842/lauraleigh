@@ -2,7 +2,7 @@
 	/* Publications */
 ?>
 
-<section class="publicationSection">
+<section id="features" class="publicationSection">
 	<div class="container">
 		<div class="publicationInfoSection">
 			<?php get_template_part('templates/clients/publications','info' ); ?>

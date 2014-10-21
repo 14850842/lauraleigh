@@ -19,19 +19,19 @@
 			// The Loop
 			if ( $query->have_posts() ) { ?>
 
-				<div class="row">
+				<ul class="list-inline">
 			
 						<?php while ( $query->have_posts() ) { $query->the_post(); ?>
 							
-							<div class="col-xs-6 col-md-2">
+							<li>
 								<div class="imageContainer">
-									<a href="#"><?php the_post_thumbnail('medium',array('class'=>'img-responsive')); ?></a>
+									<a href="<?php echo get_post_meta($post->ID,'_url',true);?>"><?php the_post_thumbnail('medium',array('class'=>'img-responsive')); ?></a>
 								</div>
-    						</div>
+    						</li>
 		    					
 						<?php } ?>
 
-				</div>
+				</ul>
 			<?php } else {
 				// no posts found
 			}

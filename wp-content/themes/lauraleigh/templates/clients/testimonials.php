@@ -2,7 +2,7 @@
 	/* Testimonials */
 ?>
 
-<section class="testimonialSection">
+<section id="testimonials" class="testimonialSection">
 	<div class="container">
 		<?php
 			$args = array('post_type'=>'testimonial','testimonial-category'=>'clients','posts_per_page'=>-1,'orderby'=>'menu_order');

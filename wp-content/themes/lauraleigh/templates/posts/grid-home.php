@@ -6,22 +6,38 @@ global $exclude_post;
 <section class="postSection">
 	<div class="container">
 		<?php
-			$args = array('post_type'=>'post','posts_per_page'=>6,'post__not_in'=>array($exclude_post));
-			// The Query
-			$query = new WP_Query( $args );
+			$paged = 1;
+			if ( get_query_var( 'paged' ) ) { $paged = get_query_var( 'paged' ); }
+			if ( get_query_var( 'page' ) ) { $paged = get_query_var( 'page' ); }
+			$paged = intval( $paged );
+
+			// Exclude categories on the homepage.
+
+			$query_args = array(
+				  'post_type' => 'post', 
+				  'paged' => $paged,
+				  'posts_per_page'=>6,
+				  'post__not_in'=>array($exclude_post)
+				);
+
+			query_posts( $query_args );
 
 			// The Loop
-			if ( $query->have_posts() ) { ?>
+			if ( have_posts() ) { ?>
 				<h2 class="sectionTitle text-center">Some of My Favourite Shoots</h2>
 				<div class="titleDivider divider ss-style-roundedsplit">&nsbp;</div>
 				
-				<?php while ( $query->have_posts() ) { $query->the_post(); ?>
+				<?php while ( have_posts() ) { the_post(); ?>
 					<div class="postContainer">
 						<?php get_template_part('templates/posts/post','layout'); ?>
 						<div class="titleDivider divider ss-style-roundedsplit">&nsbp;</div>
 					</div>
-				<?php }
-			} else {
+				<?php } ?>
+
+			<?php 
+
+
+		} else {
 				// no posts found
 			}
 			/* Restore original Post Data */

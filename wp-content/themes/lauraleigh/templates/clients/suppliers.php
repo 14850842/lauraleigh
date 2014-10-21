@@ -2,7 +2,7 @@
 	/* Suppliers */
 ?>
 
-<section class="suppliersSection">
+<section id="suppliers" class="suppliersSection">
 	<div class="container">
 		<div class="suppliersInfoSection">
 			<?php get_template_part('templates/clients/suppliers','info' ); ?>
