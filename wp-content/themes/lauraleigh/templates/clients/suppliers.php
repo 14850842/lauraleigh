@@ -22,11 +22,10 @@
 						
 						<?php while ( $query->have_posts() ) { $query->the_post(); ?>
 						
-							<li>
+							<li class="supplier">
 								<div class="imageContainer">
 									<?php the_post_thumbnail('medium',array('class'=>'img-responsive')); ?>
-
-	      							<a class="overlay-link" href="#"><h4 class="overlay-text"><span>Visit Website</span></h4></a>
+	      							<a class="overlay-link" href="<?php echo get_post_meta($post->ID,'url',true);?>"><h4 class="overlay-text"><span>Visit Website</span></h4></a>
 								</div>
 								<div class="titleContainer">
 									<h3><?php the_title(); ?></h3>
@@ -35,7 +34,7 @@
     						</li>
 		    					
 						<?php } ?>
-						
+
 					</ul>
 
 				</div>
