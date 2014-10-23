@@ -17,22 +17,25 @@
 			if ( $query->have_posts() ) { ?>
 
 				<div class="row">
-			
+					
+					<ul class="list-inline">
+						
 						<?php while ( $query->have_posts() ) { $query->the_post(); ?>
 						
-							<div class="col-xs-6 col-md-2 supplier">
+							<li class="supplier">
 								<div class="imageContainer">
 									<?php the_post_thumbnail('medium',array('class'=>'img-responsive')); ?>
-
-	      							<a class="overlay-link" href="#"><h4 class="overlay-text"><span>Visit Website</span></h4></a>
+	      							<a class="overlay-link" href="<?php echo get_post_meta($post->ID,'url',true);?>"><h4 class="overlay-text"><span>Visit Website</span></h4></a>
 								</div>
 								<div class="titleContainer">
 									<h3><?php the_title(); ?></h3>
       								<small><span class="meta"><?php echo get_post_meta($post->ID,'_ppm_title_meta',true);?></span></small>
       							</div>
-    						</div>
+    						</li>
 		    					
 						<?php } ?>
+
+					</ul>
 
 				</div>
 			<?php } else {
