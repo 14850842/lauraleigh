@@ -26,7 +26,7 @@ body > svg {
   fill:@gray;
 }
 
-.home {
+.home{
 	@navbar-padding-vertical-home: ((180px - @line-height-computed) / 2);
 	.navbar-brand {
 		padding: @navbar-padding-vertical-home @navbar-padding-horizontal;
@@ -38,6 +38,23 @@ body > svg {
 			> a {
 				padding-top: @navbar-padding-vertical-home;
 				padding-bottom: @navbar-padding-vertical-home;
+			}
+		}
+		.transition(all 0.5s);
+	}
+	.stuck {
+		@navbar-padding-vertical: ((@navbar-height - @line-height-computed) / 2);
+		.navbar-brand {
+			padding: @navbar-padding-vertical @navbar-padding-horizontal;
+		}
+		.navbar {
+			min-height:@navbar-height;
+			.navbar-nav
+			> li {
+				> a {
+					padding-top: @navbar-padding-vertical;
+					padding-bottom: @navbar-padding-vertical;
+				}
 			}
 		}
 	}

@@ -13,7 +13,7 @@ jQuery(document).ready(function() {
 
       ias.extension(new IASSpinnerExtension());            // shows a spinner (a.k.a. loader)
       ias.extension(new IASTriggerExtension({
-          html: '<div class="nav-buttons loadmore"><a href="#" class="link"><span class="icon-wrap"><svg class="svg-icon shape-plus"><use xlink:href="#shape-plus"></use></svg></span><h3>Load More</h3></a></div>'
+          html: '<div class="nav-buttons loadmore"><span class="link"><span class="icon-wrap"><svg class="svg-icon shape-plus"><use xlink:href="#shape-plus"></use></svg></span><h3>Load More</h3></span></div>'
       })); // shows a trigger after page 3
       ias.extension(new IASNoneLeftExtension({
         text: 'There are no more pages left to load.'      // override text when no pages left
@@ -29,6 +29,22 @@ jQuery(document).ready(function() {
         
         event.preventDefault();
     });
+
+    
+    var $head = jQuery( 'header' );
+      jQuery( '.ha-waypoint' ).each( function(i) {
+        var $el = jQuery( this );
+
+        $el.waypoint( function( direction ) {
+          if( direction === 'down' ) {
+            $head.attr('class', 'header stuck');
+          }
+          else if( direction === 'up'){
+            $head.attr('class', 'header unstuck');
+          }
+        }, { offset: '100%' } );
+      } );
+    
 
 });
 

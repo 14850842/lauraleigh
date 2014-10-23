@@ -4,7 +4,7 @@ global $post;
 /* About Section Home Page */
 
 ?>
-<section class="aboutSection">
+<section class="aboutSection ha-waypoint">
 	<div class="container">
 		<div class="textContainer">
 			<?php
