@@ -6,10 +6,10 @@
 
 <div class="postHeader">
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-md-6">
 			<h2 class="postTitle"><?php the_title(); ?></h2>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-md-6">
 			<?php get_template_part('templates/meta'); ?>
 		</div>
 	</div>

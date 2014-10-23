@@ -39,7 +39,7 @@
 
 					      <?php $trunc_limit = 30; ?>
 					      <?php $prev = get_previous_post(); ?>
-					      <div class="previous col-md-2">
+					      <div class="previous col-md-3">
 					      	<?php if ($prev) : ?>
 					      		<nav class="nav-roundslide nav-buttons">
 									<a class="prev link" href="<?php echo get_permalink($prev); ?>">
@@ -54,10 +54,10 @@
 							<?php endif; ?>
 						     
 					      </div>
-					      <div class="col-md-offset-1 col-md-6 social text-center">
+					      <div class="col-md-6 social text-center">
 					      	<?php woo_story_sharing(); ?>
 					      </div>
-					      <div class="col-md-offset-1 col-md-2 next">
+					      <div class="col-md-3 next">
 					      	<?php $next = get_next_post(); ?>
 					      	<?php if ($next) : ?>
 						      	<nav class="nav-roundslide nav-buttons">

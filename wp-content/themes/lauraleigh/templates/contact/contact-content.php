@@ -16,10 +16,10 @@
 						<div class="titleDivider divider ss-style-roundedsplit">&nsbp;</div>
 						<div class="pageContent">
 							<div class="row">
-								<div class="col-xs-6">
+								<div class="col-md-6">
 									<?php the_content(); ?>
 								</div>
-								<div class="col-xs-6">
+								<div class="col-md-6">
 									<?php gravity_form(1, false, false, false, '', false); ?>
 								</div>
 							</div>

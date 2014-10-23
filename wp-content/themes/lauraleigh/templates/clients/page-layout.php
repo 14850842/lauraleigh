@@ -6,10 +6,10 @@
 <?php global $more; $more = 0; ?>
 <div id="<?php echo $post->post_name; ?>" class="pageContent">
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-sm-6">
 			<?php grid_page_images($post->ID); ?>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-sm-6">
 			<h2 class="pageTitle"><?php the_title(); ?></h2>
 			<div class="titleDivider divider ss-style-roundedsplit">&nsbp;</div>
 			<?php the_content(); ?>

@@ -10,12 +10,12 @@
 			<h2 class="pageTitle"><?php the_title(); ?></h2>
 			<div class="titleDivider divider ss-style-roundedsplit">&nsbp;</div>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-sm-6">
 			<div class="row">
 				<?php grid_page_images($post->ID); ?>
 			</div>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-sm-6">
 			<?php the_content(); ?>
 			<?php get_page_link_info(); ?>
 		</div>
