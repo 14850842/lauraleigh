@@ -50,6 +50,7 @@ class PPM_Getlayed_Engine {
 			global $pagenow;
 
 			// Add Layout Button with preview items
+			add_action( 'add_meta_boxes', array($this,'ppm_meta_box_add' ));  
 
 		}
 
@@ -62,6 +63,32 @@ class PPM_Getlayed_Engine {
 		add_action('wp_footer',array($this,'PPM_Getlayed_Engine_Menu'),1);
 
 	} // End __construct()
+
+	/**
+	 * Add Layout Button Meta Box
+	 *
+	 * @access public
+	 * @since   1.0.0
+	 * @return   void
+	 *
+	 */
+
+	function ppm_meta_box_add()  
+	{  
+		add_meta_box( 'layout-manager', 'Layout Manager', array($this,'ppm_meta_box_cb'), 'post', 'side', 'high' );
+	} 
+
+	/* Layout Manager Edit Post Screen */
+	function ppm_meta_box_cb()  
+	{  
+		$layout_link = set_url_scheme( get_permalink( $post->ID ) );
+		$layout_link = esc_url( apply_filters( 'layout_post_link', add_query_arg( array('preview'=>'true','layout'=>'true'), $layout_link ), $post ) );
+		$layout_button = __( 'Layout' );
+		?>
+		<a class="preview button" href="<?php echo $layout_link; ?>" target="wp-layout-<?php echo (int) $post->ID; ?>" id="post-layout"><?php echo $layout_button; ?></a>
+		<div class="clear"></div>
+		<?php
+	}
 
 	/**
 	 * Enqueue post type admin CSS.
@@ -84,7 +111,7 @@ class PPM_Getlayed_Engine {
 	 */
 	public function ppm_getlayed_engine_scripts() {
 		global $post;
-		 if (!is_admin()) {
+		 if (!is_admin() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
 
 		 	wp_register_style( 'giveaway-styles', $this->assets_url . 'css/editor.css', array(), '1.0.1' );
 			wp_enqueue_style( 'giveaway-styles' );
@@ -146,7 +173,7 @@ class PPM_Getlayed_Engine {
 	}
 
 	public function PPM_Getlayed_Engine_Content_Init($content) {
-		if ( is_preview() ) {
+		if ( is_preview() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
 			$html = '<div id="layout-builder" class="editor">';
 			$html .= $content;
 			$html .= '</div>';
@@ -160,7 +187,7 @@ class PPM_Getlayed_Engine {
 
 	public function PPM_Getlayed_Engine_Menu($content) {
 		global $post;
-		if ( is_preview() ) {
+		if ( is_preview() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
 		?>
 		<div class="editorMenu">
 			<ul>
@@ -175,11 +202,11 @@ class PPM_Getlayed_Engine {
 				</li>
 			</ul>
 		</div>
-
+		<?php add_filter( 'get_attached_media_args',array($this,'ppm_filter_media'), 10, 3 ); ?>
 		<?php $media = get_attached_media( 'image',$post->ID ); ?>
 		<div class="thumbnailMenu">
 
-            <div id="myCarousel" class="carousel slide">
+            <div id="myCarousel" class="carousel slide" data-interval="false">
                 <!-- Carousel items -->
                 <div class="carousel-inner">
                 	<?php $count = 0; ?>
@@ -229,36 +256,13 @@ class PPM_Getlayed_Engine {
 				<div class="text-center alert alert-info">
 				  <span class="fa fa-file-image-o fa-2x"></span>
 				  <h5>Add your images</h5>
-				  <small>Drag one or more of the thumbnails from the top of the screen and drop them here</small><br>
+				  <small>Drag one or more of the thumbnails from the top of the screen and plece them here</small><br>
 				  <small><em>(max of 4 images)</em></small>
 				</div>
 			  </div>
 			</div>
 		  </div>
-		</script>
-		<script type="text/x-tmpl" id="tmpl-demo1">
-		  <div id="row-{%=o.count%}" data-row="{%=o.count%}" data-disable-editing="true" contenteditable="false">
-			<div class="col-2">
-				<div class="col" >
-					<div class="layout-row" contenteditable="false">
-
-					  <div id="canvas-{%=o.count%}" class="canvas row-images clearfix" contenteditable="false"></div>
-
-					  <div contenteditable="false" id="drop-{%=o.count%}" data-canvas="canvas-{%=o.count%}" data-row="{%=o.count%}" class="init drop container-add open">
-						<div class="temkmlxt-center alert alert-info">
-						  <span class="fa fa-file-image-o fa-2x"></span>
-						  <h5>Add your images</h5>
-						  <small>Drag one or more of the thumbnails from the top of the screen and plece them here</small><br>
-						  <small><em>(max of 4 images)</em></small>
-						</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col">
-					<p>....</p>
-				</div>
-			</div>
-		  </div>
+		  <p>...</p>
 		</script>
 		<script type="text/x-tmpl" id="tmpl-picture">
 			<picture>
@@ -270,6 +274,11 @@ class PPM_Getlayed_Engine {
 		</script>
 		<?php
 		}
+	}
+
+	public function ppm_filter_media( $args, $type, $post ) {
+		$args['orderby'] = 'title';
+		return $args;
 	}
 
 

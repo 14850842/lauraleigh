@@ -1,11 +1,3 @@
-jQuery(document).ready(function(){
-	AutoSave.start();
-})
-
-jQuery(window).unload(function(){
-	AutoSave.stop();
-});
-
 jQuery('.gallerybtn').on('click',function(e){
 	e.preventDefault();
 	jQuery('.thumbnailMenu').toggleClass('open');
@@ -23,13 +15,15 @@ var article2Medium = new MediumEditor(elements);
 var row = 0;
 
 function reinit() {
-
-	var elements = document.querySelectorAll('.editor');
-	
-	var article2Medium = new MediumEditor(elements);
-
 	var dropZones = document.querySelectorAll('.init');
 	var dropCanvases = document.querySelectorAll('.col');
+
+	jQuery('p').each(function(index, item) {
+		console.log(jQuery(item).text());
+	    if(jQuery.trim(jQuery(item).text()) === "") {
+	        jQuery(item).remove();
+	    }
+	});
 
 	[].forEach.call(
 	  dropZones, 

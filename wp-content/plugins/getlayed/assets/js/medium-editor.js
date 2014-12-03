@@ -356,7 +356,7 @@ if (typeof module === 'object') {
                         tagName !== 'li' && !self.isListItemChild(node)) {
                         if (!e.shiftKey) {
                             document.execCommand('formatBlock', false, 'p');
-                            node.setAttribute("class", "active");
+
                         }
                         if (tagName === 'a') {
                             document.execCommand('unlink', false, null);
