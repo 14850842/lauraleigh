@@ -1,0 +1,22 @@
+/* Service Providers On Page Plugin CSS */
+
+
+
+/*Basic Structure */
+
+#sp-container{ margin: 10px 0; }
+
+#sp-container h4{ }
+
+#sp-container ul.sp-list{  }
+
+#sp-container ul.sp-list li.sp-list-item{ }
+
+
+
+/*Styles based on theme options */
+
+#sp-container ul.sp-list li.sp-list-item.sp-inline{ display: inline-block; margin-right: 10px;}
+
+#sp-container ul.sp-list.sp-inline{padding-left:0px}
+

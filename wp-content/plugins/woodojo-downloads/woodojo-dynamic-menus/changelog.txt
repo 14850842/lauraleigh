@@ -1,0 +1,17 @@
+*** WooDojo Dynamic Menus Changelog ***
+
+2012.10.06 - version 1.0.5
+ * /classes/class-woodojo-dynamic-menus.php - Dynamic Menus was breaking menus on the homepage.
+
+2012.08.20 - version 1.0.4
+ * /classes/dynamic-menus.class.php - RENAMED to "class-woodojo-dynamic-menus.php". Prevent direct file access. Rountine code clean-up and maintenance.
+ * woodojo-dynamic-menus.php - Prevent direct file access. Update class file reference.
+
+2012.07.25 - version 1.0.3
+ * /classes/dynamic-menus.class.php - Added logic to filter_nav_locations() to avoid conflict with posts that have no custom menus selected.
+
+2012.06.12 - version 1.0.2
+ * /classes/dynamic-menus.class.php - Added WooDojo_Dynamic_Menu::add_post_type_support() to add default post/page support
+ * /classes/dynamic-menus.class.php - Added logic to meta_box() to only show dynamic menu's metabox on supported post types
+ * /classes/dynamic-menus.class.php - Added logic for nonce warnings when adding menu items
+ * /classes/dynamic-menus.class.php - Replaced filter_nav_locations logic to check post type supports instead of is_single and is_page
