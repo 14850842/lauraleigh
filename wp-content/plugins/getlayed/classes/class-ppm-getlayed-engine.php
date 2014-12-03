@@ -112,10 +112,13 @@ class PPM_Getlayed_Engine {
 	 */
 	public function ppm_getlayed_engine_scripts() {
 		global $post;
-		 if (!is_admin() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
 
-		 	wp_register_style( 'giveaway-styles', $this->assets_url . 'css/editor.css', array(), '1.0.1' );
-			wp_enqueue_style( 'giveaway-styles' );
+		wp_register_style( 'giveaway-styles', $this->assets_url . 'css/editor.css', array(), '1.0.1' );
+		wp_enqueue_style( 'giveaway-styles' );
+
+		if (!is_admin() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
+
+		 	
 
 			wp_register_script( 'ppm-autosave',$this->assets_url . 'js/autosave.js', array('jquery'), '1.0.0',true);
 	    	wp_register_script( 'ppm-medium',$this->assets_url . 'js/medium-editor.js', array('jquery'), '1.0.0',true);
