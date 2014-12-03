@@ -25,12 +25,12 @@ global $exclude_post;
 			// The Loop
 			if ( have_posts() ) { ?>
 				<h2 class="sectionTitle text-center">Some of My Favourite Shoots</h2>
-				<div class="titleDivider divider ss-style-roundedsplit">&nsbp;</div>
+				<div class="titleDivider divider ss-style-roundedsplit"></div>
 				
 				<?php while ( have_posts() ) { the_post(); ?>
 					<div class="postContainer">
 						<?php get_template_part('templates/posts/post','layout'); ?>
-						<div class="titleDivider divider ss-style-roundedsplit">&nsbp;</div>
+						<div class="titleDivider divider ss-style-roundedsplit"></div>
 					</div>
 				<?php } ?>
 
