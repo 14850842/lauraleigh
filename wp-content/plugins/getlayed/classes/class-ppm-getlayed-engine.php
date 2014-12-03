@@ -80,7 +80,8 @@ class PPM_Getlayed_Engine {
 
 	/* Layout Manager Edit Post Screen */
 	function ppm_meta_box_cb()  
-	{  
+	{  	
+		global $post;
 		$layout_link = set_url_scheme( get_permalink( $post->ID ) );
 		$layout_link = esc_url( apply_filters( 'layout_post_link', add_query_arg( array('preview'=>'true','layout'=>'true'), $layout_link ), $post ) );
 		$layout_button = __( 'Layout' );
