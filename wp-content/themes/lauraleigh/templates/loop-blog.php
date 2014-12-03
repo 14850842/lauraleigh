@@ -21,14 +21,14 @@ query_posts( $query_args );
 		<div id="main" class="col-md-12 clearfix" role="main">
 
 				<h2 class="sectionTitle text-center"><?php the_title();?></h2>
-				<div class="titleDivider divider ss-style-roundedsplit">&nbsp;</div>
+				<div class="titleDivider divider ss-style-roundedsplit"></div>
 
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 					<article id="post-<?php the_ID(); ?>" <?php post_class('item clearfix'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
 						<div class="postContainer">
 							<?php get_template_part('templates/posts/post','layout'); ?>
-							<div class="titleDivider divider ss-style-roundedsplit">&nbsp;</div>
+							<div class="titleDivider divider ss-style-roundedsplit"></div>
 						</div>
 
 					</article> <?php // end article ?>
