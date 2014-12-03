@@ -381,7 +381,7 @@ function woo_story_sharing($title='Share:')
     $title = get_the_title();
     $summary = get_the_excerpt();   
     $socialworth = new Socialworth($url);
-    //$response = $socialworth->all();
+    $response = $socialworth->all();
 
     global $post;
 
