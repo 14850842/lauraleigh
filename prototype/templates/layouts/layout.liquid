@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Alana Meyer Photography{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {{ "bootstrap.css" | asset_url | stylesheet_tag }}
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 50px;
+            }
+            .starter-template {
+                padding: 40px 0px;
+            }
+
+
+            .mason-row {
+             -moz-column-width: 20em;
+             -webkit-column-width: 20em;
+             -moz-column-gap: 1em;
+             -webkit-column-gap:1em; 
+              
+            }
+
+            .item {
+             display: inline-block;
+             padding:  .25rem;
+             width:  100%; 
+            }
+
+            .well {
+             position:relative;
+             display: block;
+            }
+        </style>
+        <!-- TODO: Complete this project :) -->
+    </head>
+    <body>
+        {% include "navigation" %}
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+        {% include "footer" %}
+        <script src="//code.jquery.com/jquery.min.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function () {
+            $(".responsive-calendar").responsiveCalendar({
+              time: '2013-05',
+              events: {
+                "2013-04-30": {"number": 5, "url": "http://w3widgets.com/responsive-slider"},
+                "2013-04-26": {"number": 1, "url": "http://w3widgets.com"}, 
+                "2013-05-03":{"number": 1}, 
+                "2013-06-12": {}}
+            });
+          });
+        </script>
+        {{ "bootstrap.js" | asset_url | script_tag }}
+        {{ "holder.js" | asset_url | script_tag }}
+        {{ "responsive-calendar.js" | asset_url | script_tag }}
+    </body>
+</html>

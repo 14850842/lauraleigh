@@ -1,0 +1,25 @@
+<div class="navbar-header navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Alana Meyer Photography</a>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li {% if mixture.url == "index" %}class="active"{% endif %}><a href="/">Home</a></li>
+                <li {% if mixture.url == "work" %}class="active"{% endif %}><a href="/work">Portfolio</a></li>
+                <li {% if mixture.url == "about" %}class="active"{% endif %}><a href="/about">About Me</a></li>
+                <li {% if mixture.url == "pricing" %}class="active"{% endif %}><a href="/pricing">Pricing &amp; Packages</a></li>
+                <li {% if mixture.url == "blog" %}class="active"{% endif %}><a href="/blog">Blog</a></li>
+                <li {% if mixture.url == "contact" %}class="active"{% endif %}><a href="/contact">Contact Me</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="fa fa-facebook"></span></a></li>
+              <li><a href="#"><span class="fa fa-twitter"></span></a></li>
+              <li><a href="#"><span class="fa fa-pinterest"></span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

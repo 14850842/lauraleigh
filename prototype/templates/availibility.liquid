@@ -1,0 +1,41 @@
+{% block content %}
+	<div class="starter-template">
+		<h1>Availibility</h1>
+		<div class="row">
+			<div class="col-md-8">
+				<p class="lead">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+				<hr>
+				<br>
+
+        {% include "calendar" %}
+				
+			</div>
+
+			<div class="col-md-4">
+				<div class="widget">
+					<a href="/albums" class="btn btn-lg btn-block btn-default">
+						<br><br><p class="lead">View My Albums</p><br>
+					</a>
+				</div>
+				<br>
+				<div class="widget">
+					<a href="/availibility" class="btn btn-lg btn-block btn-default">
+						<br><br><p class="lead">Availibility</p><br>
+					</a>
+				</div>
+				<br>
+				<div class="widget">
+					<a href="/links" class="btn btn-lg btn-block btn-default">
+						<br><br><p class="lead">Helpful Links</p><br>
+					</a>
+				</div>
+				<br>
+				<div class="widget">
+					<a href="/faq" class="btn btn-lg btn-block btn-default">
+						<br><br><p class="lead">FAQ's</p><br>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

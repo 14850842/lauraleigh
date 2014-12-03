@@ -1,0 +1,28 @@
+{% block content %}
+
+	<div class="row starter-template">
+		<div class="col-md-8">
+			{% include "post" %}
+			<hr>
+			{% include "post" %}
+			<hr>
+			{% include "post" %}
+
+			<hr>
+
+			<div class="text-center">
+				<ul class="pager">
+					<li class="pull-left"><a href="#"><span class="fa fa-long-arrow-left"></span> Previous</a></li>
+					<li class="pull-right"><a href="#">Next <span class="fa fa-long-arrow-right"></span></a></li>
+				</ul>
+			</div>
+
+		</div>
+
+		<div class="col-md-4">
+			{% include "sidebar" %}
+		</div>
+	</div>
+	
+
+{% endblock %}

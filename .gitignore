@@ -5,7 +5,7 @@
 *.bak
 *.swp
 Thumbs.db
-npm_modules/*	
+node_modules/*	
 # wordpress specific
 wp-config.php
 wp-content/uploads/
