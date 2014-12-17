@@ -13,18 +13,6 @@ module.exports = function(grunt) {
         }
       }
     },
-    'ftp-deploy': {
-      build: {
-        auth: {
-          host: 'clients.plusplusminus.co.za',
-          port: 21,
-          authKey: 'key1'
-        },
-        src: 'wp-content/themes/lauraleigh/library/css/',
-        dest: 'public_html/lauraleigh/wp-content/themes/lauraleigh/library/css/',
-        exclusions: ['wp-content/themes/lauraleigh/library/css/.DS_Store']
-      }
-    },
     watch: {
       styles: {
         files: ['"wp-content/themes/lauraleigh/library/less/*.less',"wp-content/themes/lauraleigh/library/less/**/*.less"], // which files to watch

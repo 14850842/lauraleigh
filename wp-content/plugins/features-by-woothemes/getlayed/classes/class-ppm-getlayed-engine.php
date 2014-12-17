@@ -60,9 +60,7 @@ class PPM_Getlayed_Engine {
 		add_filter( 'the_content', array($this,'PPM_Getlayed_Engine_Content_Init'),20 );
 
 
-		add_action('wp_footer',array($this,'PPM_Getlayed_Engine_Menu'),999);
-
-		add_filter('body_class', array($this,'PPM_Getlayed_Engine_Body_Class'));
+		add_action('wp_footer',array($this,'PPM_Getlayed_Engine_Menu'),1);
 
 	} // End __construct()
 
@@ -82,8 +80,7 @@ class PPM_Getlayed_Engine {
 
 	/* Layout Manager Edit Post Screen */
 	function ppm_meta_box_cb()  
-	{  	
-		global $post;
+	{  
 		$layout_link = set_url_scheme( get_permalink( $post->ID ) );
 		$layout_link = esc_url( apply_filters( 'layout_post_link', add_query_arg( array('preview'=>'true','layout'=>'true'), $layout_link ), $post ) );
 		$layout_button = __( 'Layout' );
@@ -114,15 +111,12 @@ class PPM_Getlayed_Engine {
 	 */
 	public function ppm_getlayed_engine_scripts() {
 		global $post;
+		 if (!is_admin() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
 
-		wp_register_style( 'giveaway-styles', $this->assets_url . 'css/editor.css', array(), '1.0.1' );
-		wp_enqueue_style( 'giveaway-styles' );
+		 	wp_register_style( 'giveaway-styles', $this->assets_url . 'css/editor.css', array(), '1.0.1' );
+			wp_enqueue_style( 'giveaway-styles' );
 
-		if (!is_admin() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
-
-		 	
-
-			wp_register_script( 'ppm-oql',$this->assets_url . 'js/owl-min.js', array('jquery'), '1.0.0',true);
+			wp_register_script( 'ppm-autosave',$this->assets_url . 'js/autosave.js', array('jquery'), '1.0.0',true);
 	    	wp_register_script( 'ppm-medium',$this->assets_url . 'js/medium-editor.js', array('jquery'), '1.0.0',true);
 	    	wp_register_script( 'ppm-tmpl',$this->assets_url . 'js/tmpl.js', array('jquery'), '1.0.0',true);
 	    	wp_register_script( 'ppm-sortable',$this->assets_url . 'js/sortable.js', array('jquery'), '1.0.0',true);
@@ -130,7 +124,7 @@ class PPM_Getlayed_Engine {
 
 	    	wp_localize_script( 'ppm-general', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ),'post_id'=>$post->ID));   
 
-	    	wp_enqueue_script( 'ppm-owl');
+	    	wp_enqueue_script( 'ppm-autosave');
 	       	wp_enqueue_script( 'ppm-medium');
 	       	wp_enqueue_script( 'ppm-tmpl');
 	       	wp_enqueue_script( 'ppm-sortable');
@@ -190,12 +184,6 @@ class PPM_Getlayed_Engine {
 		
 		
 	}
-	public function PPM_Getlayed_Engine_Body_Class($classes) {
-		if (is_preview() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
-			$classes[] = 'layout';
-		} 
-		return $classes;
-	}
 
 	public function PPM_Getlayed_Engine_Menu($content) {
 		global $post;
@@ -218,7 +206,9 @@ class PPM_Getlayed_Engine {
 		<?php $media = get_attached_media( 'image',$post->ID ); ?>
 		<div class="thumbnailMenu">
 
-                <div id="owl-demo" class="owl-carousel owl-theme">
+            <div id="myCarousel" class="carousel slide" data-interval="false">
+                <!-- Carousel items -->
+                <div class="carousel-inner">
                 	<?php $count = 0; ?>
                 	<?php $image_array = array(); ?>
                 	<?php foreach ($media as $image) { $count ++;
@@ -229,20 +219,26 @@ class PPM_Getlayed_Engine {
 							$image_array[$image->ID][$size_attrs] = wp_get_attachment_image_src( $image->ID,$size_attrs); 
 						endforeach;
 
-                		echo '<div class="item">';
+                		if ($count == 1) echo '<div class="item active"><div class="row-fluid">';
+                		else if (($count - 1) % 6 == 0) echo '<div class="item"><div class="row-fluid">';
 						
-						echo '<img id="image-'.$image->ID.'"class="img-responsive" draggable="true" data-id="'.$image->ID.'" src="'.$image_attributes[0].'"/>';
+						echo '<div class="col-xs-2"><img class="img-responsive" draggable="true" data-id="'.$image->ID.'" src="'.$image_attributes[0].'"/></div>';
 
-						echo '</div>';
+						if (($count) % 6 == 0) echo '</div></div>';
 					} ?>
-					
-				</div>
-
-				<div class="customNavigation">
-				  <a class="btn prev">Previous</a>
-				  <a class="btn next">Next</a>
+					<?php if (($count) % 6 != 0) echo '</div></div>'; ?>
 				</div>
              
+            	<!-- Controls -->
+				  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+				    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				    <span class="sr-only">Previous</span>
+				  </a>
+				  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+				    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+				  </a>
+            </div><!--/myCarousel-->
 
 		</div>
 		<script type="text/javascript">
@@ -250,7 +246,7 @@ class PPM_Getlayed_Engine {
 			image_array = jQuery.parseJSON('<?php echo json_encode($image_array);?>');
 		</script>
 		<script type="text/x-tmpl" id="tmpl-demo">
-		  <div id="row-{%=o.count%}" class="row-item" data-row="{%=o.count%}" data-disable-editing="true" contenteditable="false">
+		  <div id="row-{%=o.count%}" data-row="{%=o.count%}" data-disable-editing="true" contenteditable="false">
 			
 			<div class="layout-row" contenteditable="false">
 
@@ -266,41 +262,15 @@ class PPM_Getlayed_Engine {
 			  </div>
 			</div>
 		  </div>
+		  <p>...</p>
 		</script>
 		<script type="text/x-tmpl" id="tmpl-picture">
 			<picture>
 				<source srcset="{%=o.one%}" media="(min-width: 1200px)">
 				<source srcset="{%=o.two%}" media="(min-width: 992px)">
 				<source srcset="{%=o.three%}" media="(min-width: 768px)">
-				<img data-id="{%=o.image%}" srcset="{%=o.zero%}">
+				<img srcset="{%=o.zero%}">
 			</picture>
-		</script>
-		<script type="text/x-tmpl" id="tmpl-img-options">
-			<div id="img-options">
-				<ul>
-					<li>
-						<button class="btn trash-img"><i class="fa fa-remove"></i></button>
-					</li>
-					<li>
-						<button class="btn"><i class="fa fa-gear"></i></button>
-					</li>
-				</ul>
-			</div>
-		</script>
-		<script type="text/x-tmpl" id="tmpl-row-options">
-			<div id="row-options">
-				<ul>
-					<li>
-						<button class="btn trash-row" data-row="{%=o.row%}"><i class="fa fa-remove"></i></button>
-					</li>
-					<li>
-						<button class="btn swap-row-up" data-row="{%=o.row%}"><i class="fa fa-angle-up"></i></button>
-					</li>
-					<li>
-						<button class="btn swap-row-down" data-row="{%=o.row%}"><i class="fa fa-angle-down"></i></button>
-					</li>
-				</ul>
-			</div>
 		</script>
 		<?php
 		}

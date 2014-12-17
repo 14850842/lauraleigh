@@ -97,7 +97,7 @@ if (typeof module === 'object') {
             allowMultiParagraphSelection: true,
             anchorInputPlaceholder: 'Paste or type a link',
             anchorPreviewHideDelay: 500,
-            buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote','unorderedlist','orderedlist','centered'],
+            buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote','unorderedlist','orderedlist'],
             buttonLabels: false,
             checkLinkFormat: false,
             cleanPastedHTML: false,
@@ -202,15 +202,17 @@ if (typeof module === 'object') {
             jQuery(el).find('img.unprocessed').each(function(e){
                 var orientation = temp.imageOrientation(this);
                 var image_id = jQuery(this).data('id');
+                console.log(orientation);
+                console.log(image_id);
                 if (orientation == 'landscape') {
                     var data = {};
-                    data.image = image_id;
                     switch(col) {
                         case 1:
                             data.zero = image_array[image_id].ppm_l1[0];
                             data.one = image_array[image_id].ppm_l1[0];
                             data.two = image_array[image_id].ppm_l2[0];
                             data.three = image_array[image_id].ppm_l3[0];
+                            console.log(data);
                             var func = tmpl("tmpl-picture",data);
                             jQuery(this).replaceWith(func);
                         break;
@@ -219,6 +221,7 @@ if (typeof module === 'object') {
                                 data.one = image_array[image_id].ppm_l2[0];
                                 data.two = image_array[image_id].ppm_l3[0];
                                 data.three = image_array[image_id].ppm_l3[0];
+                                console.log(data);
                                 var func = tmpl("tmpl-picture",data);
                                 jQuery(this).replaceWith(func);
                             break;
@@ -227,6 +230,7 @@ if (typeof module === 'object') {
                                 data.one = image_array[image_id].ppm_l2[0];
                                 data.two = image_array[image_id].ppm_l3[0];
                                 data.three = image_array[image_id].ppm_l3[0];
+                                console.log(data);
                                 var func = tmpl("tmpl-picture",data);
                                 jQuery(this).replaceWith(func);
                             break;
@@ -235,44 +239,7 @@ if (typeof module === 'object') {
                                 data.one = image_array[image_id].ppm_l3[0];
                                 data.two = image_array[image_id].ppm_l3[0];
                                 data.three = image_array[image_id].ppm_l3[0];
-                                var func = tmpl("tmpl-picture",data);
-                                jQuery(this).replaceWith(func);
-                            break;
-                    }
-                } else {
-                    var data = {};
-                    data.image = image_id;
-                    console.log(data);
-                    switch(col) {
-                        case 1:
-                            data.zero = image_array[image_id].ppm_p1[0];
-                            data.one = image_array[image_id].ppm_p1[0];
-                            data.two = image_array[image_id].ppm_p1[0];
-                            data.three = image_array[image_id].ppm_p1[0];
-                            var func = tmpl("tmpl-picture",data);
-                            jQuery(this).replaceWith(func);
-                        break;
-                        case 2:
-                                data.zero = image_array[image_id].ppm_p1[0];
-                                data.one = image_array[image_id].ppm_p1[0];
-                                data.two = image_array[image_id].ppm_p1[0];
-                                data.three = image_array[image_id].ppm_p1[0];
-                                var func = tmpl("tmpl-picture",data);
-                                jQuery(this).replaceWith(func);
-                            break;
-                        case 3:
-                                data.zero = image_array[image_id].ppm_p1[0];
-                                data.one = image_array[image_id].ppm_p1[0];
-                                data.two = image_array[image_id].ppm_p1[0];
-                                data.three = image_array[image_id].ppm_p1[0];
-                                var func = tmpl("tmpl-picture",data);
-                                jQuery(this).replaceWith(func);
-                            break;
-                        case 4:
-                                data.zero = image_array[image_id].ppm_p1[0];
-                                data.one = image_array[image_id].ppm_p1[0];
-                                data.two = image_array[image_id].ppm_p1[0];
-                                data.three = image_array[image_id].ppm_p1[0];
+                                console.log(data);
                                 var func = tmpl("tmpl-picture",data);
                                 jQuery(this).replaceWith(func);
                             break;
@@ -295,19 +262,6 @@ if (typeof module === 'object') {
                     var image_size = '';
                     temp.imagelayout(colus,this);
                 });
-
-                var ptags = document.querySelectorAll('p');
-
-
-
-                [].forEach.call(
-                    ptags , 
-                        function(el){
-                            if (el.innerHTML === '') {
-                                el.parentNode.removeChild(el);
-                            }
-                        }
-                );
 
                 
 
@@ -454,7 +408,7 @@ if (typeof module === 'object') {
                 
                 if (e.which === 8) {
                     var node = getSelectionStart();
-
+                    console.log(node.innerText);
                     // Override tab only for pre nodes
                     var tag = getSelectionStart().tagName.toLowerCase();
                     if (tag === 'pre') {
@@ -470,8 +424,7 @@ if (typeof module === 'object') {
             this.elements[index].addEventListener('keydown', function (e) {
                 if (e.which === 8) {
                     var node = getSelectionStart();
-                    console.log(node.previousElementSibling);
-                    if (node && (node.innerText === '\n' || node.innerText === '' || node.previousElementSibling== null) ) {
+                    if (node && node.innerText === '\n') {
                         e.preventDefault();
                     }
                 }
@@ -497,8 +450,7 @@ if (typeof module === 'object') {
                     'unorderedlist': '<button class="medium-editor-action medium-editor-action-unorderedlist" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
                     'pre': '<button class="medium-editor-action medium-editor-action-pre" data-action="append-pre" data-element="pre">' + buttonLabels.pre + '</button>',
                     'indent': '<button class="medium-editor-action medium-editor-action-indent" data-action="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-                    'outdent': '<button class="medium-editor-action medium-editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-                    'centered': '<button class="medium-editor-action medium-editor-action-centered" data-action="centered">' + buttonLabels.centered + '</button>'
+                    'outdent': '<button class="medium-editor-action medium-editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>'
                 };
             return buttonTemplates[btnType] || false;
         },
@@ -522,8 +474,7 @@ if (typeof module === 'object') {
                     'unorderedlist': '<b>&bull;</b>',
                     'pre': '<b>0101</b>',
                     'indent': '<b>&rarr;</b>',
-                    'outdent': '<b>&larr;</b>',
-                    'centered':'<b>-</b>'
+                    'outdent': '<b>&larr;</b>'
                 };
             if (buttonLabelType === 'fontawesome') {
                 customButtonLabels = {
@@ -539,8 +490,7 @@ if (typeof module === 'object') {
                     'unorderedlist': '<i class="fa fa-list-ul"></i>',
                     'pre': '<i class="fa fa-code fa-lg"></i>',
                     'indent': '<i class="fa fa-indent"></i>',
-                    'outdent': '<i class="fa fa-outdent"></i>',
-                    'centered': '<i class="fa fa-align-center"></i>'
+                    'outdent': '<i class="fa fa-outdent"></i>'
                 };
             } else if (typeof buttonLabelType === 'object') {
                 customButtonLabels = buttonLabelType;
@@ -825,9 +775,7 @@ if (typeof module === 'object') {
                 triggerAction = function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-
                     if (self.selection === undefined) {
-                         console.log(self.selection);
                         self.checkSelection();
                     }
                     if (this.className.indexOf(self.options.activeButtonClass) > -1) {
@@ -836,7 +784,6 @@ if (typeof module === 'object') {
                         this.className += ' ' + self.options.activeButtonClass;
                     }
                     if (this.hasAttribute('data-action')) {
-                        console.log(this.getAttribute('data-action'));
                         self.execAction(this.getAttribute('data-action'), e);
                     }
                 };
@@ -864,16 +811,6 @@ if (typeof module === 'object') {
                 this.triggerAnchorAction(e);
             } else if (action === 'image') {
                 document.execCommand('insertImage', false, window.getSelection());
-            } else if (action === 'centered') {
-    
-                var check = document.getSelection().anchorNode.parentNode.classList.contains('centered');
-
-                if (check === false) {
-                    document.getSelection().anchorNode.parentNode.className = 'centered';
-                } else {
-                    document.getSelection().anchorNode.parentNode.className = '';
-                }
-                
             } else {
                 document.execCommand(action, false, null);
                 this.setToolbarPosition();

@@ -2,12 +2,10 @@ jQuery(document).ready(function() {
 	// Can also be used with $(document).ready()
  
 
-    jQuery('.row-holder .col img,.portraitSizeImages img,.fullSizeImage img,.featureImage img').imagesLoaded().progress( function( instance, image ) {
+    jQuery('.row-holder .col img,.portraitSizeImages img,.fullSizeImage img,.featureImage img').not('.layout img').imagesLoaded().progress( function( instance, image ) {
         var result = image.isLoaded ? 'loaded' : 'broken';
         jQuery(image.img).wrap(function() {
-          console.log(image);
             var ratio = image.img.height/image.img.clientHeight;
-            console.log(image.img.clientHeight*40/image.img.naturalHeight);
             var height = image.img.clientHeight - (image.img.clientHeight*40)/image.img.naturalHeight;
             return ('<div class="watermark" style="overflow:hidden; height:'+Math.floor(height)+'px;"/>');
         });

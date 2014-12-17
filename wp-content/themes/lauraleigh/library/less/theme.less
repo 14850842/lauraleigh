@@ -27,6 +27,8 @@ body > svg {
 }
 .navbar-toggle {
 	margin-right:10px;
+	border: none;
+	padding: 5px 10px;
 }
 
 .svg-icon {
@@ -381,7 +383,11 @@ body > svg {
 /* About Home */
 
 .aboutSection {
-	padding: 140px 0;
+	padding: 40px 0;
+	@media (min-width:@screen-md-min) {
+		padding: 140px 0;
+	}
+	
 	background: #fdfdfd;
 	color: #333;
 	text-align: center;
@@ -405,11 +411,15 @@ body > svg {
 }
 
 .postSection {
-  padding: 100px 0;
-  .titleDivider {
-    margin-top:80px;
-    margin-bottom:60px;
-  }
+  	padding: 100px 0;
+  	@media (min-width @screen-md-min) {
+  		margin-top:40px;
+		margin-bottom:30px;
+		.titleDivider {
+			margin-top:80px;
+			margin-bottom:60px;
+		}
+	}
 }
 
 .metaContainer {
