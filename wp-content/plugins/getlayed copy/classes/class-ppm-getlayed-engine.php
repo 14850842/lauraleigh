@@ -60,7 +60,7 @@ class PPM_Getlayed_Engine {
 		add_filter( 'the_content', array($this,'PPM_Getlayed_Engine_Content_Init'),20 );
 
 
-		add_action('wp_footer',array($this,'PPM_Getlayed_Engine_Menu'),1);
+		add_action('wp_footer',array($this,'PPM_Getlayed_Engine_Menu'),999);
 
 		add_filter('body_class', array($this,'PPM_Getlayed_Engine_Body_Class'));
 
@@ -77,13 +77,7 @@ class PPM_Getlayed_Engine {
 
 	function ppm_meta_box_add()  
 	{  
-		add_meta_box( 'get-layed', 'Layout', array($this,'ppm_meta_box_cb'), 'post', 'side', 'high' );
-		add_meta_box( 'get-layed', 'Layout', array($this,'ppm_meta_box_cb'), 'wedding', 'side', 'high' );
-		add_meta_box( 'get-layed', 'Layout', array($this,'ppm_meta_box_cb'), 'giveaway', 'side', 'high' );
-		add_meta_box( 'get-layed', 'Layout', array($this,'ppm_meta_box_cb'), 'kids', 'side', 'high' );
-		add_meta_box( 'get-layed', 'Layout', array($this,'ppm_meta_box_cb'), 'travel', 'side', 'high' );
-		add_meta_box( 'get-layed', 'Layout', array($this,'ppm_meta_box_cb'), 'food', 'side', 'high' );
-		add_meta_box( 'get-layed', 'Layout', array($this,'ppm_meta_box_cb'), 'home', 'side', 'high' );
+		add_meta_box( 'layout-manager', 'Layout Manager', array($this,'ppm_meta_box_cb'), 'post', 'side', 'high' );
 	} 
 
 	/* Layout Manager Edit Post Screen */
@@ -121,19 +115,18 @@ class PPM_Getlayed_Engine {
 	public function ppm_getlayed_engine_scripts() {
 		global $post;
 
-		wp_register_style( 'giveaway-styles', $this->assets_url . 'css/editor.css', array(), '1.0.6' );
+		wp_register_style( 'giveaway-styles', $this->assets_url . 'css/editor.css', array(), '1.0.1' );
 		wp_enqueue_style( 'giveaway-styles' );
 
 		if (!is_admin() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
-			wp_register_style( 'ppm-fa', 'http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', array(), '1.0.1' );
-			wp_enqueue_style( 'ppm-fa' );
+
 		 	
 
-			wp_register_script( 'ppm-owl',$this->assets_url . 'js/owl.min.js', array('jquery'), '1.0.0',true);
+			wp_register_script( 'ppm-oql',$this->assets_url . 'js/owl-min.js', array('jquery'), '1.0.0',true);
 	    	wp_register_script( 'ppm-medium',$this->assets_url . 'js/medium-editor.js', array('jquery'), '1.0.0',true);
 	    	wp_register_script( 'ppm-tmpl',$this->assets_url . 'js/tmpl.js', array('jquery'), '1.0.0',true);
 	    	wp_register_script( 'ppm-sortable',$this->assets_url . 'js/sortable.js', array('jquery'), '1.0.0',true);
-	    	wp_register_script( 'ppm-general',$this->assets_url . 'js/general.js', array('jquery'), '1.0.2',true);
+	    	wp_register_script( 'ppm-general',$this->assets_url . 'js/general.js', array('jquery'), '1.0.0',true);
 
 	    	wp_localize_script( 'ppm-general', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ),'post_id'=>$post->ID));   
 
@@ -147,9 +140,9 @@ class PPM_Getlayed_Engine {
 	}
 
 	public function ppm_add_image_sizes() {
-		$image_sizes = array(	'ppm_l1' => array('width'=>1200,'height'=>800,'crop'=>false),
-								'ppm_l2' => array('width'=>768,'height'=>511,'crop'=>false),
-								'ppm_l3' => array('width'=>496,'height'=>330,'crop'=>false),
+		$image_sizes = array(	'ppm_l1' => array('width'=>1200,'height'=>800,'crop'=>true),
+								'ppm_l2' => array('width'=>768,'height'=>511,'crop'=>true),
+								'ppm_l3' => array('width'=>496,'height'=>330,'crop'=>true),
 								'ppm_p1' => array('width'=>600,'height'=>800,'crop'=>true),
 								'ppm_p2' => array('width'=>450,'height'=>674,'crop'=>true),
 							);
@@ -206,7 +199,7 @@ class PPM_Getlayed_Engine {
 
 	public function PPM_Getlayed_Engine_Menu($content) {
 		global $post;
-		if ( $_GET['layout'] == 'true' && current_user_can('edit_post') ) {
+		if ( is_preview() && $_GET['layout'] == 'true' && current_user_can('edit_post')) {
 		?>
 		<div class="editorMenu">
 			<ul>
@@ -221,29 +214,15 @@ class PPM_Getlayed_Engine {
 				</li>
 			</ul>
 		</div>
-		<?php //add_filter( 'get_attached_media_args',array($this,'ppm_filter_media'), 10, 3 ); ?>
-		<?php
-		wp_reset_query();
-		$args = array(
-		    'order'          => 'ASC',
-		    'post_type'      => 'attachment',
-		    'post_parent'    => $post->ID,
-		    'post_mime_type' => 'image',
-		    'numberposts'    => -1,
-		    'orderby' => 'menu_order',
-		    //'exclude'=>$post_thumbnail_id
-		);
-
-		$media = get_posts($args);  
-		?>
+		<?php add_filter( 'get_attached_media_args',array($this,'ppm_filter_media'), 10, 3 ); ?>
+		<?php $media = get_attached_media( 'image',$post->ID ); ?>
 		<div class="thumbnailMenu">
 
                 <div id="owl-demo" class="owl-carousel owl-theme">
                 	<?php $count = 0; ?>
                 	<?php $image_array = array(); ?>
                 	<?php foreach ($media as $image) { $count ++;
-                		$image_attributes = wp_get_attachment_image_src( $image->ID,'medium'); 
-                		$image_attributes_full = wp_get_attachment_image_src( $image->ID,'full'); 
+                		$image_attributes = wp_get_attachment_image_src( $image->ID,'full'); 
                 		$image_sizes = get_intermediate_image_sizes(); 
 
 						foreach ($image_sizes as $size_name => $size_attrs):
@@ -252,7 +231,7 @@ class PPM_Getlayed_Engine {
 
                 		echo '<div class="item">';
 						
-						echo '<img data-full="'.$image_attributes_full[0].'" id="image-'.$image->ID.'"class="img-responsive" draggable="true" data-id="'.$image->ID.'" src="'.$image_attributes[0].'"/>';
+						echo '<img id="image-'.$image->ID.'"class="img-responsive" draggable="true" data-id="'.$image->ID.'" src="'.$image_attributes[0].'"/>';
 
 						echo '</div>';
 					} ?>
@@ -260,8 +239,8 @@ class PPM_Getlayed_Engine {
 				</div>
 
 				<div class="customNavigation">
-				  <a class="btn prev" style="width:25px;height:25px;"><i class="fa fa-angle-left"></i></a>
-				  <a class="btn next" style="width:25px;height:25px;"><i class="fa fa-angle-right"></i></a>
+				  <a class="btn prev">Previous</a>
+				  <a class="btn next">Next</a>
 				</div>
              
 
@@ -319,15 +298,6 @@ class PPM_Getlayed_Engine {
 					</li>
 					<li>
 						<button class="btn swap-row-down" data-row="{%=o.row%}"><i class="fa fa-angle-down"></i></button>
-					</li>
-				</ul>
-			</div>
-		</script>
-		<script type="text/x-tmpl" id="tmpl-paragraph-options">
-			<div id="paragraph-options">
-				<ul>
-					<li>
-						<button class="btn center"><i class="fa fa-justify"></i></button>
 					</li>
 				</ul>
 			</div>

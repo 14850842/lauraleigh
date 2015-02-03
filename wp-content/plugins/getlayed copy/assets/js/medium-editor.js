@@ -97,7 +97,7 @@ if (typeof module === 'object') {
             allowMultiParagraphSelection: true,
             anchorInputPlaceholder: 'Paste or type a link',
             anchorPreviewHideDelay: 500,
-            buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote','unorderedlist','orderedlist'],
+            buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote','unorderedlist','orderedlist','centered'],
             buttonLabels: false,
             checkLinkFormat: false,
             cleanPastedHTML: false,
@@ -497,7 +497,8 @@ if (typeof module === 'object') {
                     'unorderedlist': '<button class="medium-editor-action medium-editor-action-unorderedlist" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
                     'pre': '<button class="medium-editor-action medium-editor-action-pre" data-action="append-pre" data-element="pre">' + buttonLabels.pre + '</button>',
                     'indent': '<button class="medium-editor-action medium-editor-action-indent" data-action="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-                    'outdent': '<button class="medium-editor-action medium-editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>'
+                    'outdent': '<button class="medium-editor-action medium-editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
+                    'centered': '<button class="medium-editor-action medium-editor-action-centered" data-action="centered">' + buttonLabels.centered + '</button>'
                 };
             return buttonTemplates[btnType] || false;
         },
@@ -521,7 +522,8 @@ if (typeof module === 'object') {
                     'unorderedlist': '<b>&bull;</b>',
                     'pre': '<b>0101</b>',
                     'indent': '<b>&rarr;</b>',
-                    'outdent': '<b>&larr;</b>'
+                    'outdent': '<b>&larr;</b>',
+                    'centered':'<b>-</b>'
                 };
             if (buttonLabelType === 'fontawesome') {
                 customButtonLabels = {
@@ -537,7 +539,8 @@ if (typeof module === 'object') {
                     'unorderedlist': '<i class="fa fa-list-ul"></i>',
                     'pre': '<i class="fa fa-code fa-lg"></i>',
                     'indent': '<i class="fa fa-indent"></i>',
-                    'outdent': '<i class="fa fa-outdent"></i>'
+                    'outdent': '<i class="fa fa-outdent"></i>',
+                    'centered': '<i class="fa fa-align-center"></i>'
                 };
             } else if (typeof buttonLabelType === 'object') {
                 customButtonLabels = buttonLabelType;
@@ -822,7 +825,9 @@ if (typeof module === 'object') {
                 triggerAction = function (e) {
                     e.preventDefault();
                     e.stopPropagation();
+
                     if (self.selection === undefined) {
+                         console.log(self.selection);
                         self.checkSelection();
                     }
                     if (this.className.indexOf(self.options.activeButtonClass) > -1) {
@@ -831,6 +836,7 @@ if (typeof module === 'object') {
                         this.className += ' ' + self.options.activeButtonClass;
                     }
                     if (this.hasAttribute('data-action')) {
+                        console.log(this.getAttribute('data-action'));
                         self.execAction(this.getAttribute('data-action'), e);
                     }
                 };
@@ -858,6 +864,16 @@ if (typeof module === 'object') {
                 this.triggerAnchorAction(e);
             } else if (action === 'image') {
                 document.execCommand('insertImage', false, window.getSelection());
+            } else if (action === 'centered') {
+    
+                var check = document.getSelection().anchorNode.parentNode.classList.contains('centered');
+
+                if (check === false) {
+                    document.getSelection().anchorNode.parentNode.className = 'centered';
+                } else {
+                    document.getSelection().anchorNode.parentNode.className = '';
+                }
+                
             } else {
                 document.execCommand(action, false, null);
                 this.setToolbarPosition();
