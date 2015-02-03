@@ -29,7 +29,7 @@ Stylesheet: Comments
 
   .comment-container {
     padding: 20px 0px;
-    border-bottom: 1px solid @gray-lighter;
+    border-bottom: none;
   }
 
 
@@ -111,10 +111,10 @@ Stylesheet: Comments
   /* general comment classes */
   .alt {}
   .odd {
-    background: #fcfcfc;
+    background: #fff;
   }
   .even {
-    background: #f9f9f9;
+    background: #fff;
   }
   .parent {}
   .comment {
@@ -127,7 +127,7 @@ Stylesheet: Comments
     }
   }
   .children {
-    article {border-left: 1px solid #eee;}
+    article {border-left: 1px solid #fff;}
   }
   .pingback {}
   .bypostauthor {
@@ -147,7 +147,9 @@ Stylesheet: Comments
 
 
   /* vcard */
-  .vcard {}
+  .vcard {
+    display: none;
+  }
 
     cite.fn {
       font-weight: 300;
